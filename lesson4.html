@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4. Lecke: At the Restaurant – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, #0891B2 0%, #06B6D4 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
+    .lesson-hero p { opacity: 0.9; font-size: 1.05rem; }
+
+    .lesson-body { max-width: 820px; margin: 0 auto; padding: 48px 24px 72px; }
+    .lesson-section { margin-bottom: 52px; }
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0891B2;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #ECFEFF;
+    }
+
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    .vocab-table th {
+      background: #0891B2;
+      color: var(--white);
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .vocab-table td { padding: 12px 18px; border-bottom: 1px solid #F1F5F9; font-size: 0.97rem; }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:hover td { background: #F0FDFF; }
+    .vocab-table .en { font-weight: 600; color: #0891B2; }
+
+    /* Udvariasság doboz */
+    .polite-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 580px) { .polite-grid { grid-template-columns: 1fr; } }
+
+    .polite-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+    .polite-card-header {
+      padding: 16px 20px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+    }
+    .polite-card-header.blue { background: #0891B2; }
+    .polite-card-header.teal { background: #0D9488; }
+    .polite-card-body { padding: 20px; }
+    .polite-example {
+      background: #F0FDFF;
+      border-left: 3px solid #0891B2;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      font-size: 0.93rem;
+    }
+    .polite-example:last-child { margin-bottom: 0; }
+    .polite-example .en { font-weight: 600; color: #0891B2; }
+    .polite-example .hu { color: var(--text-light); font-size: 0.85rem; margin-top: 3px; }
+
+    /* Párbeszéd */
+    .dialogue {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+    }
+    .dialogue-line { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+    .dialogue-line:last-child { margin-bottom: 0; }
+    .speaker {
+      min-width: 76px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--white);
+      background: #0891B2;
+      border-radius: 8px;
+      padding: 4px 10px;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .speaker.b { background: #0D9488; }
+    .dialogue-text .en-text { font-weight: 500; }
+    .dialogue-text .hu-text { color: var(--text-light); font-size: 0.88rem; margin-top: 2px; }
+
+    /* Kultúra doboz */
+    .culture-box {
+      background: #FFFBEB;
+      border: 2px solid #F59E0B;
+      border-radius: var(--radius);
+      padding: 24px 28px;
+    }
+    .culture-box-title { font-size: 1.05rem; font-weight: 700; color: #B45309; margin-bottom: 14px; }
+    .culture-box p { color: #78350F; font-size: 0.95rem; line-height: 1.7; margin-bottom: 10px; }
+    .culture-box p:last-child { margin-bottom: 0; }
+
+    /* Mondatrendező */
+    .sorter-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .sorter-task { font-weight: 600; margin-bottom: 8px; font-size: 1rem; }
+    .sorter-hint { color: var(--text-light); font-size: 0.88rem; margin-bottom: 18px; }
+    .word-pool { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 48px; }
+    .word-chip {
+      background: #EEF2FF;
+      color: var(--primary);
+      border: 2px solid #C7D2FE;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 600;
+      font-size: 0.93rem;
+      cursor: pointer;
+      transition: 0.15s;
+      user-select: none;
+    }
+    .word-chip:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
+    .word-chip.used { opacity: 0.3; pointer-events: none; }
+    .answer-zone {
+      min-height: 52px;
+      border: 2px dashed #CBD5E1;
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      background: #F8FAFC;
+      margin-bottom: 14px;
+    }
+    .answer-chip {
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .answer-chip:hover { background: var(--primary-dark); }
+    .sorter-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .sorter-result {
+      margin-top: 14px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      display: none;
+    }
+    .sorter-result.show { display: block; }
+    .sorter-result.ok { background: #D1FAE5; color: #065F46; }
+    .sorter-result.ko { background: #FEE2E2; color: #991B1B; }
+
+    .lesson-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+        <span style="background:#EEF2FF;color:var(--primary);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;">British English</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">A2 – Alapfok · 4. Lecke · ⏱ 25 perc</div>
+    <h1>At the Restaurant 🍽️</h1>
+    <p>Rendelés, udvariasság és brit éttermi szokások</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. SZÓKINCS -->
+    <div class="lesson-section">
+      <h2>📋 Éttermi szókincs (Restaurant Vocabulary)</h2>
+      <table class="vocab-table">
+        <thead>
+          <tr><th>Angolul</th><th>Magyarul</th><th>Megjegyzés</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">menu</td><td>étlap</td><td>"Can I see the menu, please?"</td></tr>
+          <tr><td class="en">starter</td><td>előétel</td><td>Brit kifejezés – USA-ban: "appetizer"</td></tr>
+          <tr><td class="en">main course</td><td>főétel</td><td>A középső fogás, a legfontosabb</td></tr>
+          <tr><td class="en">dessert</td><td>desszert / édesség</td><td>Ejtsd: "dih-ZERT"</td></tr>
+          <tr><td class="en">still water</td><td>csendes víz (nem szénsavas)</td><td>"Still or sparkling?" – ezt kérdezik</td></tr>
+          <tr><td class="en">sparkling water</td><td>szénsavas víz</td><td>Pl. San Pellegrino</td></tr>
+          <tr><td class="en">bill</td><td>számla</td><td>Brit – USA-ban: "check"</td></tr>
+          <tr><td class="en">tip</td><td>borravaló</td><td>Általában 10-15% Angliában</td></tr>
+          <tr><td class="en">waiter / waitress</td><td>pincér / felszolgáló</td><td>Vagy semlegesen: "server"</td></tr>
+          <tr><td class="en">reservation</td><td>foglalás</td><td>"I have a reservation for two."</td></tr>
+          <tr><td class="en">two courses</td><td>két fogás</td><td>Starter + main, vagy main + dessert</td></tr>
+          <tr><td class="en">service charge</td><td>felszolgálási díj</td><td>Sokszor már benne van a számlában!</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. UDVARIASSÁG -->
+    <div class="lesson-section">
+      <h2>🎩 Udvariasság (Polite Ordering)</h2>
+      <div class="polite-grid">
+        <div class="polite-card">
+          <div class="polite-card-header blue">I would like... / I'd like...</div>
+          <div class="polite-card-body">
+            <p style="color:var(--text-light);font-size:0.9rem;margin-bottom:14px;">Formálisabb, udvariasabb forma – étteremben ez az ajánlott.</p>
+            <div class="polite-example">
+              <div class="en">I'd like the soup, please.</div>
+              <div class="hu">A levest kérném, kérem.</div>
+            </div>
+            <div class="polite-example">
+              <div class="en">I would like a glass of red wine.</div>
+              <div class="hu">Egy pohár vörösbort kérnék.</div>
+            </div>
+            <div class="polite-example">
+              <div class="en">I'd like the bill, please.</div>
+              <div class="hu">A számlát kérném, kérem.</div>
+            </div>
+          </div>
+        </div>
+        <div class="polite-card">
+          <div class="polite-card-header teal">Can I have...?</div>
+          <div class="polite-card-body">
+            <p style="color:var(--text-light);font-size:0.9rem;margin-bottom:14px;">Kicsit kötetlenebb, de teljesen normális étteremben is.</p>
+            <div class="polite-example">
+              <div class="en">Can I have the chicken, please?</div>
+              <div class="hu">Kaphatok csirkét, kérem?</div>
+            </div>
+            <div class="polite-example">
+              <div class="en">Can I have some still water?</div>
+              <div class="hu">Kaphatok egy kis csendes vizet?</div>
+            </div>
+            <div class="polite-example">
+              <div class="en">Can I have the menu, please?</div>
+              <div class="hu">Kérhetem az étlapot?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. PÁRBESZÉD -->
+    <div class="lesson-section">
+      <h2>💬 Éttermi párbeszéd (Restaurant Dialogue)</h2>
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <div class="speaker b">Pincér</div>
+          <div class="dialogue-text">
+            <div class="en-text">Good evening! Do you have a reservation?</div>
+            <div class="hu-text">Jó estét! Van foglalásuk?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Vendég</div>
+          <div class="dialogue-text">
+            <div class="en-text">Yes, I have a reservation for two. The name is Kolompar.</div>
+            <div class="hu-text">Igen, kétfős foglalásunk van. Kolompar névre.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Pincér</div>
+          <div class="dialogue-text">
+            <div class="en-text">Perfect, follow me please. Can I get you some drinks to start?</div>
+            <div class="hu-text">Remek, kövessen kérem. Hozhatok valamit inni elsőnek?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Vendég</div>
+          <div class="dialogue-text">
+            <div class="en-text">I'd like some still water, please. And can I have the menu?</div>
+            <div class="hu-text">Csendes vizet kérnék, kérem. És kérhetem az étlapot?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Pincér</div>
+          <div class="dialogue-text">
+            <div class="en-text">Of course. Are you ready to order?</div>
+            <div class="hu-text">Természetesen. Készen áll a rendelésre?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Vendég</div>
+          <div class="dialogue-text">
+            <div class="en-text">Yes. I'd like the tomato soup as a starter, and the grilled salmon as my main course.</div>
+            <div class="hu-text">Igen. Előételnek a paradicsomlevet kérném, főételnek a grillezett lazacot.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Pincér</div>
+          <div class="dialogue-text">
+            <div class="en-text">Excellent choice! Is everything alright with your meal?</div>
+            <div class="hu-text">Kiváló választás! Minden rendben az étellel?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Vendég</div>
+          <div class="dialogue-text">
+            <div class="en-text">Yes, it's delicious, thank you. Could I have the bill, please?</div>
+            <div class="hu-text">Igen, nagyon finom, köszönöm. Kérhetném a számlát?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Pincér</div>
+          <div class="dialogue-text">
+            <div class="en-text">Certainly. The service charge is included. I hope you enjoyed your evening!</div>
+            <div class="hu-text">Természetesen. A felszolgálási díj benne van. Remélem, jól érezte magát!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. KULTÚRA -->
+    <div class="lesson-section">
+      <h2>🇬🇧 Brit kultúra: Borravaló (Tipping in the UK)</h2>
+      <div class="culture-box">
+        <div class="culture-box-title">💡 Amit tudni kell, mielőtt fizetsz</div>
+        <p>Angliában a borravaló <strong>nem kötelező</strong>, de illik adni, ha elégedett voltál a szolgáltatással. Az általános szokás <strong>10–15%</strong> az étel árából.</p>
+        <p><strong>Fontos:</strong> Sok étteremben a számlán már rajta van a <strong>"service charge"</strong> (felszolgálási díj – általában 12.5%). Ilyenkor nem kell külön borravalót hagyni – de ellenőrizd a számlát!</p>
+        <p><strong>Brit szleng:</strong> Ha informálisan fizetsz és azt mondod <em>"Keep the change"</em> (tartsa meg az aprót) – ez is elfogadott módja a borravalónak.</p>
+      </div>
+    </div>
+
+    <!-- 5. MONDATRENDEZŐ -->
+    <div class="lesson-section">
+      <h2>🎯 Mondatrendező (Sentence Builder)</h2>
+      <p style="color:var(--text-light); margin-bottom:24px; font-size:0.95rem;">Kattints a szavakra a helyes sorrendben, hogy összerakd a rendelő mondatot!</p>
+
+      <!-- Feladat 1 -->
+      <div class="sorter-card" id="s1">
+        <div class="sorter-task">1. Feladat: Rakd össze a mondatot!</div>
+        <div class="sorter-hint">Magyar jelentés: "A csirkét kérném, kérem."</div>
+        <div class="word-pool" id="s1-pool">
+          <span class="word-chip" onclick="addWord(this,'s1','the')">the</span>
+          <span class="word-chip" onclick="addWord(this,'s1','please')">please</span>
+          <span class="word-chip" onclick="addWord(this,'s1','I\'d')">I'd</span>
+          <span class="word-chip" onclick="addWord(this,'s1','chicken')">chicken</span>
+          <span class="word-chip" onclick="addWord(this,'s1','like')">like</span>
+        </div>
+        <div class="answer-zone" id="s1-answer"></div>
+        <div class="sorter-btns">
+          <button class="btn btn-primary" onclick="checkSorter('s1', [\"I'd\",'like','the','chicken','please'])">Ellenőrzés</button>
+          <button class="btn btn-primary" style="background:var(--text-light);" onclick="resetSorter('s1')">Újra</button>
+        </div>
+        <div class="sorter-result" id="s1-result"></div>
+      </div>
+
+      <!-- Feladat 2 -->
+      <div class="sorter-card" id="s2">
+        <div class="sorter-task">2. Feladat: Rakd össze a mondatot!</div>
+        <div class="sorter-hint">Magyar jelentés: "Kérhetem a számlát, kérem?"</div>
+        <div class="word-pool" id="s2-pool">
+          <span class="word-chip" onclick="addWord(this,'s2','please')">please</span>
+          <span class="word-chip" onclick="addWord(this,'s2','bill')">bill</span>
+          <span class="word-chip" onclick="addWord(this,'s2','have')">have</span>
+          <span class="word-chip" onclick="addWord(this,'s2','Can')">Can</span>
+          <span class="word-chip" onclick="addWord(this,'s2','the')">the</span>
+          <span class="word-chip" onclick="addWord(this,'s2','I')">I</span>
+        </div>
+        <div class="answer-zone" id="s2-answer"></div>
+        <div class="sorter-btns">
+          <button class="btn btn-primary" onclick="checkSorter('s2', ['Can','I','have','the','bill','please'])">Ellenőrzés</button>
+          <button class="btn btn-primary" style="background:var(--text-light);" onclick="resetSorter('s2')">Újra</button>
+        </div>
+        <div class="sorter-result" id="s2-result"></div>
+      </div>
+
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lesson3.html" class="btn btn-primary" style="background:var(--text-light);">← 3. Lecke</a>
+      <span style="color:var(--text-light); font-size:0.9rem;">4 / 10 lecke</span>
+      <a href="#" class="btn btn-primary" style="opacity:0.4; pointer-events:none;">5. Lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    const sorterState = {};
+
+    function addWord(chip, id, word) {
+      if (!sorterState[id]) sorterState[id] = [];
+      sorterState[id].push(word);
+      chip.classList.add('used');
+
+      const zone = document.getElementById(id + '-answer');
+      const el = document.createElement('span');
+      el.className = 'answer-chip';
+      el.textContent = word;
+      el.onclick = () => removeWord(el, chip, id, word);
+      zone.appendChild(el);
+    }
+
+    function removeWord(el, chip, id, word) {
+      sorterState[id] = sorterState[id].filter((_, i) => {
+        if (sorterState[id][i] === word && !el._removed) { el._removed = true; return false; }
+        return true;
+      });
+      el.remove();
+      chip.classList.remove('used');
+    }
+
+    function checkSorter(id, correct) {
+      const result = document.getElementById(id + '-result');
+      const answer = sorterState[id] || [];
+      const ok = answer.length === correct.length && answer.every((w, i) => w === correct[i]);
+      result.className = 'sorter-result show ' + (ok ? 'ok' : 'ko');
+      result.textContent = ok
+        ? '✅ Helyes! "' + correct.join(' ') + '"'
+        : '❌ Nem egészen. Helyes sorrend: "' + correct.join(' ') + '"';
+    }
+
+    function resetSorter(id) {
+      sorterState[id] = [];
+      document.getElementById(id + '-answer').innerHTML = '';
+      document.getElementById(id + '-result').className = 'sorter-result';
+      document.querySelectorAll('#' + id + '-pool .word-chip').forEach(c => c.classList.remove('used'));
+    }
+  </script>
+</body>
+</html>
