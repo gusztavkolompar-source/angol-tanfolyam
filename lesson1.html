@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. Lecke: Greetings & Introduction – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
+    .lesson-hero p { opacity: 0.9; font-size: 1.05rem; }
+
+    .lesson-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+
+    .lesson-section { margin-bottom: 52px; }
+
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #EEF2FF;
+    }
+
+    /* Táblázat */
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    .vocab-table th {
+      background: var(--primary);
+      color: var(--white);
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+    }
+    .vocab-table td {
+      padding: 13px 18px;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.97rem;
+    }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:hover td { background: #F8FAFF; }
+    .vocab-table .en { font-weight: 600; color: var(--primary); }
+    .vocab-table .ipa { color: var(--text-light); font-style: italic; font-size: 0.88rem; }
+
+    /* Párbeszéd */
+    .dialogue {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+    }
+    .dialogue-line {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .dialogue-line:last-child { margin-bottom: 0; }
+    .speaker {
+      min-width: 60px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--white);
+      background: var(--primary);
+      border-radius: 8px;
+      padding: 4px 10px;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .speaker.b { background: var(--accent); }
+    .dialogue-text .en-text { font-weight: 500; }
+    .dialogue-text .hu-text { color: var(--text-light); font-size: 0.88rem; margin-top: 2px; }
+
+    /* Példamondatok */
+    .examples-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .examples-list li {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 16px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .ex-num {
+      min-width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .ex-text .en { font-weight: 600; }
+    .ex-text .hu { color: var(--text-light); font-size: 0.9rem; margin-top: 3px; }
+
+    /* Kvíz */
+    .quiz-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 32px;
+      margin-bottom: 20px;
+    }
+    .quiz-question {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .quiz-option {
+      padding: 13px 18px;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.97rem;
+      background: var(--bg);
+      transition: border-color 0.2s, background 0.2s;
+      text-align: left;
+      font-family: inherit;
+    }
+    .quiz-option:hover { border-color: var(--primary); background: #EEF2FF; }
+    .quiz-option.correct { border-color: #10B981; background: #D1FAE5; color: #065F46; font-weight: 600; }
+    .quiz-option.wrong { border-color: #EF4444; background: #FEE2E2; color: #991B1B; }
+    .quiz-option:disabled { cursor: default; }
+
+    .quiz-feedback {
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.ok { background: #D1FAE5; color: #065F46; }
+    .quiz-feedback.ko { background: #FEE2E2; color: #991B1B; }
+
+    /* Navigáció leckék között */
+    .lesson-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">A1 – Kezdő · 1. Lecke · ⏱ 20 perc</div>
+    <h1>Greetings &amp; Introduction</h1>
+    <p>Üdvözlések, bemutatkozás és a létige (To Be)</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. SZÓKÉSZLET -->
+    <div class="lesson-section">
+      <h2>📋 Szókészlet (Vocabulary)</h2>
+      <table class="vocab-table">
+        <thead>
+          <tr>
+            <th>Angol</th>
+            <th>Kiejtés</th>
+            <th>Magyar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">Hello / Hi</td><td class="ipa">/həˈləʊ/ /haɪ/</td><td>Helló / Szia</td></tr>
+          <tr><td class="en">Good morning</td><td class="ipa">/ɡʊd ˈmɔːnɪŋ/</td><td>Jó reggelt</td></tr>
+          <tr><td class="en">Good afternoon</td><td class="ipa">/ɡʊd ˌɑːftəˈnuːn/</td><td>Jó napot</td></tr>
+          <tr><td class="en">Good evening</td><td class="ipa">/ɡʊd ˈiːvnɪŋ/</td><td>Jó estét</td></tr>
+          <tr><td class="en">Goodbye / Bye</td><td class="ipa">/ɡʊdˈbaɪ/ /baɪ/</td><td>Viszlát / Szia</td></tr>
+          <tr><td class="en">My name is...</td><td class="ipa">/maɪ neɪm ɪz/</td><td>A nevem...</td></tr>
+          <tr><td class="en">I'm from...</td><td class="ipa">/aɪm frɒm/</td><td>... -ból/ből vagyok</td></tr>
+          <tr><td class="en">Nice to meet you</td><td class="ipa">/naɪs tə miːt juː/</td><td>Örülök, hogy megismerhetlek</td></tr>
+          <tr><td class="en">How are you?</td><td class="ipa">/haʊ ɑː juː/</td><td>Hogy vagy?</td></tr>
+          <tr><td class="en">I'm fine, thanks</td><td class="ipa">/aɪm faɪn θæŋks/</td><td>Jól vagyok, köszönöm</td></tr>
+          <tr><td class="en">Please</td><td class="ipa">/pliːz/</td><td>Kérem / Legyen szíves</td></tr>
+          <tr><td class="en">Thank you</td><td class="ipa">/θæŋk juː/</td><td>Köszönöm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. PÁRBESZÉD -->
+    <div class="lesson-section">
+      <h2>💬 Párbeszéd (Dialogue)</h2>
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <div class="speaker">Anna</div>
+          <div class="dialogue-text">
+            <div class="en-text">Good morning! My name is Anna. What's your name?</div>
+            <div class="hu-text">Jó reggelt! A nevem Anna. Mi a neved?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Ben</div>
+          <div class="dialogue-text">
+            <div class="en-text">Hi Anna! I'm Ben. Nice to meet you.</div>
+            <div class="hu-text">Szia Anna! Ben vagyok. Örülök, hogy megismerhetlek.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Anna</div>
+          <div class="dialogue-text">
+            <div class="en-text">Nice to meet you too. Where are you from?</div>
+            <div class="hu-text">Én is. Te honnan vagy?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Ben</div>
+          <div class="dialogue-text">
+            <div class="en-text">I'm from England. I'm a student. And you?</div>
+            <div class="hu-text">Angliából vagyok. Diák vagyok. És te?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Anna</div>
+          <div class="dialogue-text">
+            <div class="en-text">I'm from Hungary. I'm a teacher. Goodbye, Ben!</div>
+            <div class="hu-text">Magyarországról vagyok. Tanár vagyok. Viszlát, Ben!</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Ben</div>
+          <div class="dialogue-text">
+            <div class="en-text">Goodbye, Anna! Have a lovely day!</div>
+            <div class="hu-text">Viszlát, Anna! Szép napot!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. PÉLDAMONDATOK -->
+    <div class="lesson-section">
+      <h2>📝 Példamondatok (Examples)</h2>
+      <ul class="examples-list">
+        <li>
+          <div class="ex-num">1</div>
+          <div class="ex-text">
+            <div class="en">I am Gusztáv. I am from Hungary.</div>
+            <div class="hu">Gusztáv vagyok. Magyarországról vagyok.</div>
+          </div>
+        </li>
+        <li>
+          <div class="ex-num">2</div>
+          <div class="ex-text">
+            <div class="en">She is my teacher. She is very kind.</div>
+            <div class="hu">Ő a tanárom. Nagyon kedves.</div>
+          </div>
+        </li>
+        <li>
+          <div class="ex-num">3</div>
+          <div class="ex-text">
+            <div class="en">We are students. We are not from London.</div>
+            <div class="hu">Mi diákok vagyunk. Nem Londonból vagyunk.</div>
+          </div>
+        </li>
+        <li>
+          <div class="ex-num">4</div>
+          <div class="ex-text">
+            <div class="en">How are you? — I'm fine, thank you very much!</div>
+            <div class="hu">Hogy vagy? — Jól vagyok, nagyon köszönöm!</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 4. KVÍZ -->
+    <div class="lesson-section">
+      <h2>🎯 Mini Kvíz</h2>
+
+      <!-- Q1 -->
+      <div class="quiz-card" id="q1">
+        <div class="quiz-question">1. Hogyan mondod angolul: "Jó reggelt!"?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q1',false)">Good evening</button>
+          <button class="quiz-option" onclick="answer(this,'q1',true)">Good morning</button>
+          <button class="quiz-option" onclick="answer(this,'q1',false)">Good night</button>
+        </div>
+        <div class="quiz-feedback" id="q1-fb"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-card" id="q2">
+        <div class="quiz-question">2. Melyik a helyes mondat?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q2',false)">I am from England. I are a student.</button>
+          <button class="quiz-option" onclick="answer(this,'q2',true)">I am from England. I am a student.</button>
+          <button class="quiz-option" onclick="answer(this,'q2',false)">I is from England. I am a student.</button>
+        </div>
+        <div class="quiz-feedback" id="q2-fb"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-card" id="q3">
+        <div class="quiz-question">3. Mit jelent: "Nice to meet you"?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q3',false)">Jó napot kívánok</button>
+          <button class="quiz-option" onclick="answer(this,'q3',false)">Viszlát</button>
+          <button class="quiz-option" onclick="answer(this,'q3',true)">Örülök, hogy megismerhetlek</button>
+        </div>
+        <div class="quiz-feedback" id="q3-fb"></div>
+      </div>
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lessons.html" class="btn btn-primary" style="background: var(--text-light);">← Vissza a leckékhez</a>
+      <span style="color:var(--text-light); font-size:0.9rem;">1 / 10 lecke</span>
+      <a href="#" class="btn btn-primary" style="opacity:0.4; pointer-events:none;">2. Lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function answer(btn, qId, isCorrect) {
+      const card = document.getElementById(qId);
+      const feedback = document.getElementById(qId + '-fb');
+      card.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      feedback.classList.add('show', isCorrect ? 'ok' : 'ko');
+      if (isCorrect) {
+        feedback.textContent = '✅ Helyes! Szép munka!';
+      } else {
+        const correct = [...card.querySelectorAll('.quiz-option')].find(b => b.onclick.toString().includes('true'));
+        feedback.textContent = '❌ Nem egészen. A helyes válasz: "' + correct.textContent + '"';
+        correct.classList.add('correct');
+      }
+    }
+  </script>
+</body>
+</html>
