@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. Lecke: My Day – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
+    .lesson-hero p { opacity: 0.9; font-size: 1.05rem; }
+
+    .lesson-body { max-width: 820px; margin: 0 auto; padding: 48px 24px 72px; }
+    .lesson-section { margin-bottom: 52px; }
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #EEF2FF;
+    }
+
+    /* Táblázat */
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    .vocab-table th {
+      background: var(--primary);
+      color: var(--white);
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .vocab-table td { padding: 12px 18px; border-bottom: 1px solid #F1F5F9; font-size: 0.97rem; }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:hover td { background: #F8FAFF; }
+    .vocab-table .en { font-weight: 600; color: var(--primary); }
+
+    /* Nyelvtan doboz */
+    .grammar-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+    .grammar-box-header {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--white);
+      padding: 18px 28px;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .grammar-box-body { padding: 28px; }
+
+    .grammar-rule {
+      background: #EEF2FF;
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      font-size: 0.97rem;
+    }
+
+    /* S-ending kiemelő doboz */
+    .s-box {
+      background: #FFF7ED;
+      border: 2px solid #F97316;
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin: 20px 0;
+    }
+    .s-box-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #EA580C;
+      margin-bottom: 14px;
+    }
+    .s-table { width: 100%; border-collapse: collapse; }
+    .s-table th { text-align: left; padding: 8px 12px; color: #EA580C; font-size: 0.85rem; letter-spacing: 0.04em; }
+    .s-table td { padding: 10px 12px; border-top: 1px solid #FED7AA; font-size: 0.97rem; }
+    .s-table .s-end { color: #DC2626; font-weight: 800; font-size: 1.1rem; }
+    .s-tip {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: #9A3412;
+      background: #FFEDD5;
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+
+    /* Időpontok */
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .time-card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 20px;
+      text-align: center;
+    }
+    .time-icon { font-size: 2rem; margin-bottom: 8px; }
+    .time-en { font-weight: 700; color: var(--primary); font-size: 1rem; }
+    .time-hu { color: var(--text-light); font-size: 0.88rem; margin-top: 4px; }
+    .time-example { font-size: 0.82rem; color: var(--accent); margin-top: 6px; font-style: italic; }
+
+    /* Példaszöveg */
+    .story-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 32px;
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+    .story-box p { margin-bottom: 12px; }
+    .story-box p:last-child { margin-bottom: 0; }
+    .highlight { color: var(--primary); font-weight: 700; }
+    .s-highlight { color: #DC2626; font-weight: 800; }
+
+    /* True/False kvíz */
+    .tf-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+    .tf-question { font-weight: 600; margin-bottom: 16px; font-size: 1rem; }
+    .tf-buttons { display: flex; gap: 12px; }
+    .tf-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid #E2E8F0;
+      font-weight: 700;
+      font-size: 0.97rem;
+      cursor: pointer;
+      background: var(--bg);
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    .tf-btn:hover { border-color: var(--primary); background: #EEF2FF; }
+    .tf-btn.correct { border-color: #10B981; background: #D1FAE5; color: #065F46; }
+    .tf-btn.wrong { border-color: #EF4444; background: #FEE2E2; color: #991B1B; }
+    .tf-btn:disabled { cursor: default; }
+    .tf-feedback {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.93rem;
+      display: none;
+    }
+    .tf-feedback.show { display: block; }
+    .tf-feedback.ok { background: #D1FAE5; color: #065F46; }
+    .tf-feedback.ko { background: #FEE2E2; color: #991B1B; }
+
+    .lesson-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+        <span style="background:#EEF2FF;color:var(--primary);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;">British English</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">A1 – Kezdő · 3. Lecke · ⏱ 25 perc</div>
+    <h1>My Day – Simple Present</h1>
+    <p>Napi rutin igék, időpontok és az első komolyabb nyelvtan</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. SZÓKINCS -->
+    <div class="lesson-section">
+      <h2>📋 Napi rutin igék (Daily Routine Verbs)</h2>
+      <table class="vocab-table">
+        <thead>
+          <tr><th>Ige (angolul)</th><th>Magyar</th><th>Példamondat</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="en">get up</td><td>felkel</td><td>I get up at 7 o'clock.</td></tr>
+          <tr><td class="en">have a shower</td><td>zuhanyozik</td><td>I have a shower every morning.</td></tr>
+          <tr><td class="en">have breakfast</td><td>reggelizik</td><td>She has breakfast at half past seven.</td></tr>
+          <tr><td class="en">go to work</td><td>munkába megy</td><td>He goes to work by bus.</td></tr>
+          <tr><td class="en">start work</td><td>munkát kezd</td><td>I start work at nine.</td></tr>
+          <tr><td class="en">have lunch</td><td>ebédel</td><td>We have lunch at one o'clock.</td></tr>
+          <tr><td class="en">finish work</td><td>befejezi a munkát</td><td>She finishes work at five.</td></tr>
+          <tr><td class="en">come home</td><td>hazajön</td><td>I come home at half past five.</td></tr>
+          <tr><td class="en">cook dinner</td><td>vacsorát főz</td><td>He cooks dinner every evening.</td></tr>
+          <tr><td class="en">watch TV</td><td>tévét néz</td><td>We watch TV after dinner.</td></tr>
+          <tr><td class="en">go to bed</td><td>lefeküdni</td><td>I go to bed at eleven.</td></tr>
+          <tr><td class="en">fall asleep</td><td>elalszik</td><td>She falls asleep very quickly.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. NYELVTAN -->
+    <div class="lesson-section">
+      <h2>📖 Nyelvtan: Simple Present (Egyszerű jelen)</h2>
+      <div class="grammar-box">
+        <div class="grammar-box-header">Mikor használjuk? (When do we use it?)</div>
+        <div class="grammar-box-body">
+          <div class="grammar-rule">
+            A <strong>Simple Present</strong>-et akkor használjuk, ha valamiről azt mondjuk, hogy <strong>általában igaz, szokás, rendszeresen megtörténik</strong>.<br>
+            Magyarul: "szoktam", "minden nap", "általában"
+          </div>
+
+          <p style="margin-bottom:16px; color:var(--text-light);">Például:</p>
+          <table class="vocab-table" style="margin-bottom: 24px;">
+            <thead><tr><th>Magyar</th><th>Angol</th></tr></thead>
+            <tbody>
+              <tr><td>Minden nap dolgozom.</td><td class="en">I work every day.</td></tr>
+              <tr><td>Reggelente kávézom.</td><td class="en">I drink coffee in the morning.</td></tr>
+              <tr><td>A buszon utazom munkába.</td><td class="en">I travel to work by bus.</td></tr>
+            </tbody>
+          </table>
+
+          <!-- S-ending doboz -->
+          <div class="s-box">
+            <div class="s-box-title">⚠️ A fontos "-s" szabály (He / She / It)</div>
+            <p style="margin-bottom:14px; font-size:0.95rem;">Ha <strong>ő (he), ő (she) vagy az (it)</strong> az alany, az ige végére <strong style="color:#DC2626;">-s</strong> kerül!</p>
+            <table class="s-table">
+              <thead><tr><th>Személy</th><th>Ige</th><th>Példa</th></tr></thead>
+              <tbody>
+                <tr><td>I / You / We / They</td><td>work</td><td>I <strong>work</strong> every day.</td></tr>
+                <tr>
+                  <td><strong>He / She / It</strong></td>
+                  <td>work<span class="s-end">s</span></td>
+                  <td>She <strong>work<span class="s-end">s</span></strong> every day.</td>
+                </tr>
+                <tr><td>I / You / We / They</td><td>go</td><td>They <strong>go</strong> to work.</td></tr>
+                <tr>
+                  <td><strong>He / She / It</strong></td>
+                  <td>go<span class="s-end">es</span></td>
+                  <td>He <strong>go<span class="s-end">es</span></strong> to work.</td>
+                </tr>
+                <tr><td>I / You / We / They</td><td>have</td><td>We <strong>have</strong> breakfast.</td></tr>
+                <tr>
+                  <td><strong>He / She / It</strong></td>
+                  <td>ha<span class="s-end">s</span></td>
+                  <td>She <strong>ha<span class="s-end">s</span></strong> breakfast.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="s-tip">
+              💡 <strong>Trükk:</strong> Ha kételkedsz, tedd a mondatba a "She" szót – ha furcsán hangzik az ige -s nélkül, akkor biztos kell!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. IDŐPONTOK -->
+    <div class="lesson-section">
+      <h2>🕐 Időpontok (Telling the Time – egyszerűen)</h2>
+      <div class="time-grid">
+        <div class="time-card">
+          <div class="time-icon">🌅</div>
+          <div class="time-en">7 am / 7 o'clock</div>
+          <div class="time-hu">reggel 7 óra</div>
+          <div class="time-example">"I get up at 7 am."</div>
+        </div>
+        <div class="time-card">
+          <div class="time-icon">☀️</div>
+          <div class="time-en">half past eight</div>
+          <div class="time-hu">fél kilenc (8:30)</div>
+          <div class="time-example">"I start work at half past eight."</div>
+        </div>
+        <div class="time-card">
+          <div class="time-icon">🕛</div>
+          <div class="time-en">quarter past one</div>
+          <div class="time-hu">negyed kettő (1:15)</div>
+          <div class="time-example">"Lunch is at quarter past one."</div>
+        </div>
+        <div class="time-card">
+          <div class="time-icon">🌇</div>
+          <div class="time-en">5 pm / five o'clock</div>
+          <div class="time-hu">este 5 óra</div>
+          <div class="time-example">"I finish work at 5 pm."</div>
+        </div>
+        <div class="time-card">
+          <div class="time-icon">🌙</div>
+          <div class="time-en">quarter to eleven</div>
+          <div class="time-hu">háromnegyed tizenegy (10:45)</div>
+          <div class="time-example">"I go to bed at quarter to eleven."</div>
+        </div>
+        <div class="time-card">
+          <div class="time-icon">💡</div>
+          <div class="time-en">in the morning / evening</div>
+          <div class="time-hu">reggel / este</div>
+          <div class="time-example">"I work in the morning."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. PÉLDASZÖVEG -->
+    <div class="lesson-section">
+      <h2>📄 My Typical Day – Példaszöveg</h2>
+      <div class="story-box">
+        <p>
+          My name is <span class="highlight">Tom</span>. I live in <span class="highlight">Oldham</span>, in the north of England.
+          I <span class="highlight">get up</span> at <span class="highlight">half past six</span> every morning.
+          First, I <span class="highlight">have a shower</span>, then I <span class="highlight">have breakfast</span> — usually toast and a cup of tea.
+        </p>
+        <p>
+          I <span class="highlight">go to work</span> at <span class="highlight">8 am</span> by bus.
+          I <span class="highlight">start work</span> at <span class="highlight">nine o'clock</span>.
+          My colleague Sarah also <span class="highlight">start<span class="s-highlight">s</span></span> at nine — she <span class="highlight">travel<span class="s-highlight">s</span></span> by car.
+        </p>
+        <p>
+          At <span class="highlight">one o'clock</span> I <span class="highlight">have lunch</span> at the office.
+          I usually <span class="highlight">finish work</span> at <span class="highlight">5 pm</span>.
+          In the evening, I <span class="highlight">cook dinner</span> and then I <span class="highlight">watch TV</span> for an hour.
+          I <span class="highlight">go to bed</span> at <span class="highlight">quarter to eleven</span>.
+        </p>
+      </div>
+      <p style="margin-top:12px; font-size:0.88rem; color:var(--text-light);">
+        💡 A <strong style="color:var(--primary);">kék szavak</strong> a napi rutinigék. A <strong style="color:#DC2626;">piros -s</strong> jelzi, ahol E/3 miatt kell a végződés.
+      </p>
+    </div>
+
+    <!-- 5. TRUE/FALSE KVÍZ -->
+    <div class="lesson-section">
+      <h2>🎯 Igaz vagy Hamis? (True or False?)</h2>
+      <p style="color:var(--text-light); margin-bottom:24px; font-size:0.95rem;">A példaszöveg (Tom napja) alapján döntsd el!</p>
+
+      <div class="tf-card" id="tf1">
+        <div class="tf-question">1. Tom gets up at half past six.</div>
+        <div class="tf-buttons">
+          <button class="tf-btn" onclick="tf(this,'tf1',true)">✅ True – Igaz</button>
+          <button class="tf-btn" onclick="tf(this,'tf1',false)">❌ False – Hamis</button>
+        </div>
+        <div class="tf-feedback" id="tf1-fb"></div>
+      </div>
+
+      <div class="tf-card" id="tf2">
+        <div class="tf-question">2. Tom goes to work by car.</div>
+        <div class="tf-buttons">
+          <button class="tf-btn" onclick="tf(this,'tf2',false)">✅ True – Igaz</button>
+          <button class="tf-btn" onclick="tf(this,'tf2',true)">❌ False – Hamis</button>
+        </div>
+        <div class="tf-feedback" id="tf2-fb"></div>
+      </div>
+
+      <div class="tf-card" id="tf3">
+        <div class="tf-question">3. Sarah travels to work by car.</div>
+        <div class="tf-buttons">
+          <button class="tf-btn" onclick="tf(this,'tf3',true)">✅ True – Igaz</button>
+          <button class="tf-btn" onclick="tf(this,'tf3',false)">❌ False – Hamis</button>
+        </div>
+        <div class="tf-feedback" id="tf3-fb"></div>
+      </div>
+
+      <div class="tf-card" id="tf4">
+        <div class="tf-question">4. Tom finishes work at 6 pm.</div>
+        <div class="tf-buttons">
+          <button class="tf-btn" onclick="tf(this,'tf4',false)">✅ True – Igaz</button>
+          <button class="tf-btn" onclick="tf(this,'tf4',true)">❌ False – Hamis</button>
+        </div>
+        <div class="tf-feedback" id="tf4-fb"></div>
+      </div>
+
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lesson2.html" class="btn btn-primary" style="background:var(--text-light);">← 2. Lecke</a>
+      <span style="color:var(--text-light); font-size:0.9rem;">3 / 10 lecke</span>
+      <a href="#" class="btn btn-primary" style="opacity:0.4; pointer-events:none;">4. Lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function tf(btn, id, isCorrect) {
+      const card = document.getElementById(id);
+      const fb = document.getElementById(id + '-fb');
+      card.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.classList.add('show', isCorrect ? 'ok' : 'ko');
+      fb.textContent = isCorrect ? '✅ Helyes!' : '❌ Nem – nézd meg újra a szöveget!';
+    }
+  </script>
+</body>
+</html>
