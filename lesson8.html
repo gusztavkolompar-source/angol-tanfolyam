@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8. Lecke: Free Time & Hobbies – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
+    .lesson-hero p { opacity: 0.9; font-size: 1.05rem; }
+
+    .lesson-body { max-width: 820px; margin: 0 auto; padding: 48px 24px 72px; }
+    .lesson-section { margin-bottom: 52px; }
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #7C3AED;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #F5F3FF;
+    }
+
+    /* Hobby kártyák */
+    .hobby-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+    .hobby-card {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: var(--card-shadow);
+      padding: 20px 14px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .hobby-card:hover { transform: translateY(-3px); }
+    .hobby-icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .hobby-en { font-weight: 700; color: #7C3AED; font-size: 0.9rem; }
+    .hobby-hu { color: var(--text-light); font-size: 0.82rem; margin-top: 4px; }
+
+    /* Like/Love/Hate skála */
+    .scale-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+    }
+    .scale-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    .scale-row:last-child { border-bottom: none; }
+    .scale-emoji { font-size: 2rem; min-width: 44px; text-align: center; flex-shrink: 0; }
+    .scale-verb { font-weight: 700; color: #7C3AED; font-size: 1rem; min-width: 90px; }
+    .scale-meaning { color: var(--text-light); font-size: 0.88rem; margin-bottom: 6px; }
+    .scale-example { font-size: 0.93rem; font-style: italic; }
+
+    /* Grammar doboz */
+    .grammar-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+    .grammar-box-header {
+      background: linear-gradient(135deg, #7C3AED, #A78BFA);
+      color: var(--white);
+      padding: 18px 28px;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .grammar-box-body { padding: 28px; }
+    .grammar-rule {
+      background: #F5F3FF;
+      border-left: 4px solid #7C3AED;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      font-size: 0.97rem;
+    }
+    .ing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .ing-grid { grid-template-columns: 1fr; } }
+    .ing-box { background: #F5F3FF; border-radius: 10px; padding: 16px; }
+    .ing-box .label { font-size: 0.8rem; font-weight: 700; color: #7C3AED; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .ing-box .correct { color: #065F46; font-weight: 600; }
+    .ing-box .wrong { color: #991B1B; text-decoration: line-through; }
+    .ing-box .hu { color: var(--text-light); font-size: 0.88rem; margin-top: 4px; }
+    .ing-rules {
+      margin-top: 20px;
+      background: #FFF7ED;
+      border: 2px solid #F97316;
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .ing-rules-title { font-weight: 700; color: #EA580C; margin-bottom: 12px; }
+    .ing-rule-item { display: flex; gap: 12px; margin-bottom: 10px; font-size: 0.93rem; }
+    .ing-rule-item:last-child { margin-bottom: 0; }
+    .ing-tag { background: #FED7AA; color: #9A3412; border-radius: 6px; padding: 2px 10px; font-weight: 700; font-size: 0.82rem; flex-shrink: 0; }
+
+    /* Párbeszéd */
+    .dialogue {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+    }
+    .dialogue-line { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+    .dialogue-line:last-child { margin-bottom: 0; }
+    .speaker {
+      min-width: 70px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--white);
+      background: #7C3AED;
+      border-radius: 8px;
+      padding: 4px 10px;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .speaker.b { background: #0891B2; }
+    .dialogue-text .en-text { font-weight: 500; }
+    .dialogue-text .hu-text { color: var(--text-light); font-size: 0.88rem; margin-top: 2px; }
+
+    /* -ing kvíz */
+    .ing-quiz-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .ing-sentence {
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .ing-blank {
+      display: inline-block;
+      min-width: 90px;
+      border-bottom: 3px solid #7C3AED;
+      color: #7C3AED;
+      font-weight: 700;
+      text-align: center;
+      padding: 0 6px;
+      vertical-align: bottom;
+    }
+    .ing-options { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 6px; }
+    .ing-option {
+      padding: 10px 20px;
+      border: 2px solid #DDD6FE;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      background: #F5F3FF;
+      color: #7C3AED;
+      font-weight: 600;
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    .ing-option:hover { background: #7C3AED; color: var(--white); border-color: #7C3AED; }
+    .ing-option.correct { background: #D1FAE5; color: #065F46; border-color: #10B981; }
+    .ing-option.wrong { background: #FEE2E2; color: #991B1B; border-color: #EF4444; }
+    .ing-option:disabled { cursor: default; }
+    .ing-feedback {
+      margin-top: 12px; padding: 12px 16px; border-radius: 8px;
+      font-weight: 600; display: none; font-size: 0.93rem;
+    }
+    .ing-feedback.show { display: block; }
+    .ing-feedback.ok { background: #D1FAE5; color: #065F46; }
+    .ing-feedback.ko { background: #FEE2E2; color: #991B1B; }
+
+    .lesson-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 48px; gap: 16px; flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+        <span style="background:#EEF2FF;color:var(--primary);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;">British English</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">A2 – Alapfok · 8. Lecke · ⏱ 20 perc</div>
+    <h1>Free Time &amp; Hobbies ⚽</h1>
+    <p>Szabadidő, hobbik és a like+ing szerkezet</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. HOBBIK -->
+    <div class="lesson-section">
+      <h2>🎯 Szabadidős tevékenységek (Hobbies & Activities)</h2>
+      <div class="hobby-grid">
+        <div class="hobby-card">
+          <div class="hobby-icon">⚽</div>
+          <div class="hobby-en">playing football</div>
+          <div class="hobby-hu">focizni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🏋️</div>
+          <div class="hobby-en">going to the gym</div>
+          <div class="hobby-hu">edzőterembe járni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🚶</div>
+          <div class="hobby-en">going for a walk</div>
+          <div class="hobby-hu">sétálni menni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🎣</div>
+          <div class="hobby-en">fishing</div>
+          <div class="hobby-hu">horgászni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🍳</div>
+          <div class="hobby-en">cooking</div>
+          <div class="hobby-hu">főzni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🎬</div>
+          <div class="hobby-en">watching Netflix</div>
+          <div class="hobby-hu">Netflixet nézni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🔨</div>
+          <div class="hobby-en">DIY</div>
+          <div class="hobby-hu">barkácsolni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🌱</div>
+          <div class="hobby-en">gardening</div>
+          <div class="hobby-hu">kertészkedni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">📚</div>
+          <div class="hobby-en">reading</div>
+          <div class="hobby-hu">olvasni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🎮</div>
+          <div class="hobby-en">gaming</div>
+          <div class="hobby-hu">játszani (konzol/PC)</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🚴</div>
+          <div class="hobby-en">cycling</div>
+          <div class="hobby-hu">kerékpározni</div>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-icon">🎵</div>
+          <div class="hobby-en">listening to music</div>
+          <div class="hobby-hu">zenét hallgatni</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. LIKE/LOVE/HATE SKÁLA -->
+    <div class="lesson-section">
+      <h2>❤️ Hogyan fejezzük ki, mit szeretünk?</h2>
+      <div class="scale-box">
+        <div class="scale-row">
+          <div class="scale-emoji">😍</div>
+          <div class="scale-verb">love</div>
+          <div>
+            <div class="scale-meaning">nagyon szeretem, imádom</div>
+            <div class="scale-example">"I <strong>love</strong> watching football at the weekend."</div>
+          </div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-emoji">😊</div>
+          <div class="scale-verb">like</div>
+          <div>
+            <div class="scale-meaning">szeretem, kedvelem</div>
+            <div class="scale-example">"I <strong>like</strong> going for a walk in the park."</div>
+          </div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-emoji">🙂</div>
+          <div class="scale-verb">enjoy</div>
+          <div>
+            <div class="scale-meaning">élvezem (aktívabban)</div>
+            <div class="scale-example">"I <strong>enjoy</strong> cooking dinner for my family."</div>
+          </div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-emoji">😐</div>
+          <div class="scale-verb">don't mind</div>
+          <div>
+            <div class="scale-meaning">nem bánom, nem zavar</div>
+            <div class="scale-example">"I <strong>don't mind</strong> doing the washing up."</div>
+          </div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-emoji">😒</div>
+          <div class="scale-verb">don't like</div>
+          <div>
+            <div class="scale-meaning">nem szeretem</div>
+            <div class="scale-example">"I <strong>don't like</strong> getting up early."</div>
+          </div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-emoji">😤</div>
+          <div class="scale-verb">hate</div>
+          <div>
+            <div class="scale-meaning">utálom</div>
+            <div class="scale-example">"I <strong>hate</strong> waiting in queues." (tipikus brit!)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. GRAMMAR: LIKE + ING -->
+    <div class="lesson-section">
+      <h2>📖 Nyelvtan: Like + -ing szerkezet</h2>
+      <div class="grammar-box">
+        <div class="grammar-box-header">Miért kell az -ing? (Why the -ing form?)</div>
+        <div class="grammar-box-body">
+          <div class="grammar-rule">
+            A <strong>love, like, enjoy, hate</strong> után angolban az ige <strong>-ing</strong> alakban áll.<br>
+            Magyarul ez nincs így – ezért szokás hibázni!
+          </div>
+          <div class="ing-grid">
+            <div class="ing-box">
+              <div class="label">✅ Helyes</div>
+              <div class="correct">I like swim<strong>ming</strong>.</div>
+              <div class="hu">Szeretek úszni.</div>
+            </div>
+            <div class="ing-box">
+              <div class="label">❌ Hibás</div>
+              <div class="wrong">I like swim.</div>
+              <div class="hu">— (így nem mondják)</div>
+            </div>
+            <div class="ing-box">
+              <div class="label">✅ Helyes</div>
+              <div class="correct">She loves cook<strong>ing</strong>.</div>
+              <div class="hu">Imád főzni.</div>
+            </div>
+            <div class="ing-box">
+              <div class="label">❌ Hibás</div>
+              <div class="wrong">She loves to cook.</div>
+              <div class="hu">(Nem mindig hibás, de like után -ing a természetes)</div>
+            </div>
+          </div>
+          <div class="ing-rules">
+            <div class="ing-rules-title">⚡ Hogyan képezzük az -ing alakot?</div>
+            <div class="ing-rule-item">
+              <span class="ing-tag">Egyszerű</span>
+              <span>A legtöbb ige: csak add hozzá → play → play<strong>ing</strong>, watch → watch<strong>ing</strong></span>
+            </div>
+            <div class="ing-rule-item">
+              <span class="ing-tag">-e végű</span>
+              <span>Az -e lemarad → make → mak<strong>ing</strong>, come → com<strong>ing</strong></span>
+            </div>
+            <div class="ing-rule-item">
+              <span class="ing-tag">Rövid+msh.</span>
+              <span>Rövid ige + mássalhangzó → kétszerezd → swim → swim<strong>ming</strong>, run → run<strong>ning</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. PÁRBESZÉD -->
+    <div class="lesson-section">
+      <h2>💬 Hétvégi tervek (Weekend Plans)</h2>
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <div class="speaker">Tom</div>
+          <div class="dialogue-text">
+            <div class="en-text">What do you do in your free time, Sarah?</div>
+            <div class="hu-text">Mit csinálsz a szabadidődben, Sarah?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Sarah</div>
+          <div class="dialogue-text">
+            <div class="en-text">I love going to the gym and I enjoy cycling at the weekend. Are you interested in sport?</div>
+            <div class="hu-text">Imádok edzőterembe járni és élvezem a kerékpározást hétvégén. Te érdeklődsz a sport iránt?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Tom</div>
+          <div class="dialogue-text">
+            <div class="en-text">Definitely! I love watching football. I'm a big City fan – I go to the Etihad sometimes.</div>
+            <div class="hu-text">Határozottan! Imádom focit nézni. Nagy City-szurkoló vagyok – néha kimegyek az Etihad Stadionba.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Sarah</div>
+          <div class="dialogue-text">
+            <div class="en-text">Oh brilliant! Do you want to go to Alexandra Park this Saturday? They're having a local market.</div>
+            <div class="hu-text">Ó, nagyszerű! Akarjátok el a Alexandra Parkba ezen a szombaton? Helyi piacot tartanak.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Tom</div>
+          <div class="dialogue-text">
+            <div class="en-text">That sounds great! I don't mind going early either – I hate crowds.</div>
+            <div class="hu-text">Remekül hangzik! Korán is mehetünk – utálom a tömeget.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Sarah</div>
+          <div class="dialogue-text">
+            <div class="en-text">Perfect. See you Saturday at ten, then!</div>
+            <div class="hu-text">Tökéletes. Akkor szombaton tízre!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. -ING KVÍZ -->
+    <div class="lesson-section">
+      <h2>🎯 -ing kvíz: Egészítsd ki a mondatot!</h2>
+      <p style="color:var(--text-light); margin-bottom:24px; font-size:0.95rem;">Válaszd ki a helyes -ing alakot!</p>
+
+      <div class="ing-quiz-card" id="iq1">
+        <div class="ing-sentence">I love <span class="ing-blank" id="iq1-blank">___</span> to music after work.</div>
+        <div class="ing-options">
+          <button class="ing-option" onclick="ingAnswer(this,'iq1',false,'listen')">listen</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq1',true,'listening')">listening</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq1',false,'to listen')">to listen</button>
+        </div>
+        <div class="ing-feedback" id="iq1-fb"></div>
+      </div>
+
+      <div class="ing-quiz-card" id="iq2">
+        <div class="ing-sentence">She hates <span class="ing-blank" id="iq2-blank">___</span> in queues.</div>
+        <div class="ing-options">
+          <button class="ing-option" onclick="ingAnswer(this,'iq2',false,'wait')">wait</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq2',false,'waitting')">waitting</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq2',true,'waiting')">waiting</button>
+        </div>
+        <div class="ing-feedback" id="iq2-fb"></div>
+      </div>
+
+      <div class="ing-quiz-card" id="iq3">
+        <div class="ing-sentence">He enjoys <span class="ing-blank" id="iq3-blank">___</span> at the weekend.</div>
+        <div class="ing-options">
+          <button class="ing-option" onclick="ingAnswer(this,'iq3',true,'cycling')">cycling</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq3',false,'cycle')">cycle</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq3',false,'cycleing')">cycleing</button>
+        </div>
+        <div class="ing-feedback" id="iq3-fb"></div>
+      </div>
+
+      <div class="ing-quiz-card" id="iq4">
+        <div class="ing-sentence">I don't like <span class="ing-blank" id="iq4-blank">___</span> up early on Sundays.</div>
+        <div class="ing-options">
+          <button class="ing-option" onclick="ingAnswer(this,'iq4',false,'get')">get</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq4',false,'geting')">geting</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq4',true,'getting')">getting</button>
+        </div>
+        <div class="ing-feedback" id="iq4-fb"></div>
+      </div>
+
+      <div class="ing-quiz-card" id="iq5">
+        <div class="ing-sentence">Tom loves <span class="ing-blank" id="iq5-blank">___</span> football at the Etihad.</div>
+        <div class="ing-options">
+          <button class="ing-option" onclick="ingAnswer(this,'iq5',false,'watch')">watch</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq5',true,'watching')">watching</button>
+          <button class="ing-option" onclick="ingAnswer(this,'iq5',false,'watched')">watched</button>
+        </div>
+        <div class="ing-feedback" id="iq5-fb"></div>
+      </div>
+
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lesson7.html" class="btn btn-primary" style="background:var(--text-light);">← 7. Lecke</a>
+      <span style="color:var(--text-light); font-size:0.9rem;">8 / 10 lecke</span>
+      <a href="#" class="btn btn-primary" style="opacity:0.4; pointer-events:none;">9. Lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function ingAnswer(btn, id, isCorrect, word) {
+      const card = document.getElementById(id);
+      const fb = document.getElementById(id + '-fb');
+      const blank = document.getElementById(id + '-blank');
+      card.querySelectorAll('.ing-option').forEach(b => b.disabled = true);
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      blank.textContent = word;
+      blank.style.color = isCorrect ? '#065F46' : '#991B1B';
+      fb.classList.add('show', isCorrect ? 'ok' : 'ko');
+      if (isCorrect) {
+        fb.textContent = '✅ Helyes! "' + word + '" a jó alak.';
+      } else {
+        const correct = [...card.querySelectorAll('.ing-option')].find(b => b.onclick.toString().includes('true,'));
+        const correctWord = correct.textContent;
+        fb.textContent = '❌ Nem egészen. A helyes alak: "' + correctWord + '"';
+        correct.classList.add('correct');
+        blank.textContent = correctWord;
+      }
+    }
+  </script>
+</body>
+</html>
