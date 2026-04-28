@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7. Lecke: Work & Career – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
+    .lesson-hero p { opacity: 0.9; font-size: 1.05rem; }
+
+    .lesson-body { max-width: 820px; margin: 0 auto; padding: 48px 24px 72px; }
+    .lesson-section { margin-bottom: 52px; }
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1D4ED8;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #EFF6FF;
+    }
+
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    .vocab-table th { background: #1D4ED8; color: var(--white); padding: 14px 18px; text-align: left; font-size: 0.9rem; }
+    .vocab-table td { padding: 12px 18px; border-bottom: 1px solid #F1F5F9; font-size: 0.97rem; }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:hover td { background: #EFF6FF; }
+    .vocab-table .en { font-weight: 600; color: #1D4ED8; }
+
+    /* Munkahelyi szavak kártyák */
+    .work-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+    .work-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+    .work-card-top { background: #1D4ED8; color: var(--white); padding: 14px 18px; font-weight: 700; font-size: 1rem; }
+    .work-card-body { padding: 18px; }
+    .work-card-body p { color: var(--text-light); font-size: 0.9rem; line-height: 1.6; margin-bottom: 8px; }
+    .work-card-body p:last-child { margin-bottom: 0; }
+    .work-card-body .example { color: #1D4ED8; font-style: italic; font-size: 0.88rem; }
+
+    /* Interjú szekció */
+    .interview-list { display: flex; flex-direction: column; gap: 20px; }
+    .interview-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+    .interview-q {
+      background: #1D4ED8;
+      color: var(--white);
+      padding: 16px 22px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .interview-q .hu { opacity: 0.8; font-size: 0.85rem; font-weight: 400; margin-top: 4px; }
+    .interview-body { padding: 20px 22px; }
+    .interview-tip {
+      background: #EFF6FF;
+      border-left: 4px solid #1D4ED8;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      color: #1E40AF;
+      margin-bottom: 12px;
+    }
+    .interview-example { font-size: 0.95rem; line-height: 1.7; }
+    .interview-example .label { font-size: 0.8rem; font-weight: 700; color: #1D4ED8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .interview-example .answer { color: var(--text); }
+    .interview-example .hu { color: var(--text-light); font-size: 0.88rem; margin-top: 4px; }
+
+    /* Tulajdonságok */
+    .qualities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .quality-chip {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .quality-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .quality-en { font-weight: 700; color: #1D4ED8; font-size: 0.97rem; }
+    .quality-hu { color: var(--text-light); font-size: 0.85rem; margin-top: 2px; }
+
+    /* Kvíz */
+    .quiz-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .quiz-desc {
+      background: #EFF6FF;
+      border-left: 4px solid #1D4ED8;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-style: italic;
+      color: #1E40AF;
+      margin-bottom: 20px;
+    }
+    .quiz-question { font-weight: 600; margin-bottom: 18px; font-size: 1rem; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-option {
+      padding: 13px 18px;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.97rem;
+      background: var(--bg);
+      transition: 0.2s;
+      text-align: left;
+      font-family: inherit;
+    }
+    .quiz-option:hover { border-color: #1D4ED8; background: #EFF6FF; }
+    .quiz-option.correct { border-color: #10B981; background: #D1FAE5; color: #065F46; font-weight: 600; }
+    .quiz-option.wrong { border-color: #EF4444; background: #FEE2E2; color: #991B1B; }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-feedback {
+      margin-top: 14px; padding: 13px 16px; border-radius: 8px;
+      font-weight: 600; display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.ok { background: #D1FAE5; color: #065F46; }
+    .quiz-feedback.ko { background: #FEE2E2; color: #991B1B; }
+
+    .lesson-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 48px; gap: 16px; flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+        <span style="background:#EEF2FF;color:var(--primary);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;">British English</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">A2 – Alapfok · 7. Lecke · ⏱ 25 perc</div>
+    <h1>Work &amp; Career 💼</h1>
+    <p>Szakmák, munkahelyi szókincs és állásinterjú angolul</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. SZAKMÁK -->
+    <div class="lesson-section">
+      <h2>👷 Szakmák és munkakörök (Jobs & Professions)</h2>
+      <table class="vocab-table">
+        <thead><tr><th>Angolul</th><th>Magyarul</th><th>Példamondat</th></tr></thead>
+        <tbody>
+          <tr><td class="en">driver / lorry driver</td><td>sofőr / kamionsofőr</td><td>"I drive a lorry for a logistics company."</td></tr>
+          <tr><td class="en">nurse</td><td>ápoló / nővér</td><td>"She works as a nurse at the hospital."</td></tr>
+          <tr><td class="en">warehouse operative</td><td>raktáros / raktári dolgozó</td><td>"He works as a warehouse operative in Oldham."</td></tr>
+          <tr><td class="en">office assistant</td><td>irodai asszisztens</td><td>"I'm an office assistant – I handle emails and calls."</td></tr>
+          <tr><td class="en">cleaner</td><td>takarító</td><td>"She works as a cleaner in a hotel."</td></tr>
+          <tr><td class="en">engineer</td><td>mérnök / technikus</td><td>"He's a mechanical engineer."</td></tr>
+          <tr><td class="en">shop assistant</td><td>bolti eladó</td><td>"I work as a shop assistant in Tesco."</td></tr>
+          <tr><td class="en">chef / cook</td><td>séf / szakács</td><td>"She's a chef in a local restaurant."</td></tr>
+          <tr><td class="en">delivery driver</td><td>futár / szállítósofőr</td><td>"He's a delivery driver for Amazon."</td></tr>
+          <tr><td class="en">self-employed</td><td>önfoglalkoztató / vállalkozó</td><td>"I'm self-employed – I run my own business."</td></tr>
+          <tr><td class="en">retired</td><td>nyugdíjas</td><td>"My father is retired now."</td></tr>
+          <tr><td class="en">unemployed</td><td>munkanélküli</td><td>"I'm currently unemployed and looking for work."</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. MUNKAHELYI SZAVAK -->
+    <div class="lesson-section">
+      <h2>🏢 Munkahelyi szókincs (Workplace Vocabulary)</h2>
+      <div class="work-cards">
+        <div class="work-card">
+          <div class="work-card-top">⏰ Shift work (Műszak)</div>
+          <div class="work-card-body">
+            <p>Amikor váltakozva dolgozol nappal és éjjel, vagy különböző időpontokban.</p>
+            <p class="example">"I do shift work – sometimes I work nights."</p>
+            <p class="example">"My shift starts at 6 am."</p>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-card-top">💰 Overtime (Túlóra)</div>
+          <div class="work-card-body">
+            <p>A normál munkaidőn felül ledolgozott idő – általában magasabb bérrel.</p>
+            <p class="example">"I do overtime on Saturdays."</p>
+            <p class="example">"Overtime pay is time and a half."</p>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-card-top">📅 Full-time / Part-time</div>
+          <div class="work-card-body">
+            <p><strong>Full-time:</strong> Általában heti 35-40 óra.<br><strong>Part-time:</strong> Kevesebb, pl. heti 16-20 óra.</p>
+            <p class="example">"I work full-time, Monday to Friday."</p>
+            <p class="example">"She works part-time – three days a week."</p>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-card-top">📝 Contract / Agency</div>
+          <div class="work-card-body">
+            <p><strong>Permanent contract:</strong> Határozatlan idejű szerződés.<br><strong>Agency work:</strong> Munkaközvetítőn keresztül.</p>
+            <p class="example">"I'm on a permanent contract now."</p>
+            <p class="example">"I found my job through an agency."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. ÁLLÁSINTERJÚ -->
+    <div class="lesson-section">
+      <h2>🤝 Állásinterjú (Job Interview)</h2>
+      <div class="interview-list">
+
+        <div class="interview-item">
+          <div class="interview-q">
+            "Tell me about yourself."
+            <div class="hu">Meséljen magáról.</div>
+          </div>
+          <div class="interview-body">
+            <div class="interview-tip">💡 Tipp: Röviden, 3-4 mondatban: ki vagy, mi a tapasztalatod, mit keresel.</div>
+            <div class="interview-example">
+              <div class="label">Példa válasz</div>
+              <div class="answer">"My name is Tom and I'm from Oldham. I have three years of experience as a warehouse operative. I'm reliable, hardworking, and I'm looking for a full-time permanent position."</div>
+              <div class="hu">A nevem Tom és Oldhamből vagyok. Három éves tapasztalatom van raktári munkásként. Megbízható és szorgalmas vagyok, állandó teljes munkaidős állást keresek.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interview-item">
+          <div class="interview-q">
+            "What are your strengths?"
+            <div class="hu">Mik az erősségei?</div>
+          </div>
+          <div class="interview-body">
+            <div class="interview-tip">💡 Tipp: Soha ne mondj általánosat – mondj konkrét példát!</div>
+            <div class="interview-example">
+              <div class="label">Példa válasz</div>
+              <div class="answer">"I'm very punctual – I've never been late for work. I'm also a good team player and I learn new skills quickly."</div>
+              <div class="hu">Nagyon pontosan járok – soha nem késtem el munkából. Emellett jó csapatjátékos vagyok, és gyorsan tanulok új dolgokat.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interview-item">
+          <div class="interview-q">
+            "Why do you want this job?"
+            <div class="hu">Miért szeretné ezt a munkát?</div>
+          </div>
+          <div class="interview-body">
+            <div class="interview-tip">💡 Tipp: Mutasd meg, hogy ismered a céget és motivált vagy – ne csak a fizetést emlegesd!</div>
+            <div class="interview-example">
+              <div class="label">Példa válasz</div>
+              <div class="answer">"I want this job because your company has a great reputation in the area. I'd like to develop my skills further and I think I can make a real contribution to your team."</div>
+              <div class="hu">Azért szeretném ezt a munkát, mert a cégük kiváló hírnévnek örvend a környéken. Szeretném fejleszteni a készségeimet, és úgy gondolom, valóban hozzájárulhatok a csapathoz.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 4. TULAJDONSÁGOK -->
+    <div class="lesson-section">
+      <h2>⭐ Pozitív munkával kapcsolatos tulajdonságok (Skills & Qualities)</h2>
+      <div class="qualities-grid">
+        <div class="quality-chip">
+          <div class="quality-icon">✅</div>
+          <div><div class="quality-en">reliable</div><div class="quality-hu">megbízható</div></div>
+        </div>
+        <div class="quality-chip">
+          <div class="quality-icon">⏰</div>
+          <div><div class="quality-en">punctual</div><div class="quality-hu">pontos</div></div>
+        </div>
+        <div class="quality-chip">
+          <div class="quality-icon">💪</div>
+          <div><div class="quality-en">hardworking</div><div class="quality-hu">szorgalmas</div></div>
+        </div>
+        <div class="quality-chip">
+          <div class="quality-icon">🤝</div>
+          <div><div class="quality-en">team player</div><div class="quality-hu">csapatjátékos</div></div>
+        </div>
+        <div class="quality-chip">
+          <div class="quality-icon">📚</div>
+          <div><div class="quality-en">experienced</div><div class="quality-hu">tapasztalt</div></div>
+        </div>
+        <div class="quality-chip">
+          <div class="quality-icon">🧠</div>
+          <div><div class="quality-en">quick learner</div><div class="quality-hu">gyorsan tanul</div></div>
+        </div>
+        <div class="quality-chip">
+          <div class="quality-icon">😊</div>
+          <div><div class="quality-en">flexible</div><div class="quality-hu">rugalmas</div></div>
+        </div>
+        <div class="quality-chip">
+          <div class="quality-icon">🎯</div>
+          <div><div class="quality-en">motivated</div><div class="quality-hu">motivált</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. KVÍZ -->
+    <div class="lesson-section">
+      <h2>🎯 Melyik munka ez? (What's the Job?)</h2>
+      <p style="color:var(--text-light); margin-bottom:24px; font-size:0.95rem;">Olvasd el a leírást, és találd ki a szakmát!</p>
+
+      <div class="quiz-card" id="q1">
+        <div class="quiz-desc">"I drive a big lorry and deliver goods across the country. I sometimes work nights and do a lot of overtime."</div>
+        <div class="quiz-question">Mi a foglalkozása?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q1',false)">Warehouse operative</button>
+          <button class="quiz-option" onclick="answer(this,'q1',true)">Lorry driver</button>
+          <button class="quiz-option" onclick="answer(this,'q1',false)">Engineer</button>
+        </div>
+        <div class="quiz-feedback" id="q1-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q2">
+        <div class="quiz-desc">"I look after sick people in a hospital. I work long shifts and I have to be very calm under pressure."</div>
+        <div class="quiz-question">Mi a foglalkozása?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q2',false)">Chef</button>
+          <button class="quiz-option" onclick="answer(this,'q2',false)">Cleaner</button>
+          <button class="quiz-option" onclick="answer(this,'q2',true)">Nurse</button>
+        </div>
+        <div class="quiz-feedback" id="q2-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q3">
+        <div class="quiz-desc">"I pick and pack orders in a large building. I'm on my feet all day and I use a forklift sometimes."</div>
+        <div class="quiz-question">Mi a foglalkozása?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q3',true)">Warehouse operative</button>
+          <button class="quiz-option" onclick="answer(this,'q3',false)">Office assistant</button>
+          <button class="quiz-option" onclick="answer(this,'q3',false)">Delivery driver</button>
+        </div>
+        <div class="quiz-feedback" id="q3-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q4">
+        <div class="quiz-desc">"I run my own business. I don't have a boss – I decide my own working hours."</div>
+        <div class="quiz-question">Hogyan írják le ezt a munkavégzési formát?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q4',false)">Part-time</button>
+          <button class="quiz-option" onclick="answer(this,'q4',false)">On a permanent contract</button>
+          <button class="quiz-option" onclick="answer(this,'q4',true)">Self-employed</button>
+        </div>
+        <div class="quiz-feedback" id="q4-fb"></div>
+      </div>
+
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lesson6.html" class="btn btn-primary" style="background:var(--text-light);">← 6. Lecke</a>
+      <span style="color:var(--text-light); font-size:0.9rem;">7 / 10 lecke</span>
+      <a href="#" class="btn btn-primary" style="opacity:0.4; pointer-events:none;">8. Lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function answer(btn, qId, isCorrect) {
+      const card = document.getElementById(qId);
+      const feedback = document.getElementById(qId + '-fb');
+      card.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      feedback.classList.add('show', isCorrect ? 'ok' : 'ko');
+      if (isCorrect) {
+        feedback.textContent = '✅ Helyes! Pontosan!';
+      } else {
+        const correct = [...card.querySelectorAll('.quiz-option')].find(b => b.onclick.toString().includes('true'));
+        feedback.textContent = '❌ Nem egészen. A helyes válasz: "' + correct.textContent + '"';
+        correct.classList.add('correct');
+      }
+    }
+  </script>
+</body>
+</html>
