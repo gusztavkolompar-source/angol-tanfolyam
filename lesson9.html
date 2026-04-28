@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>9. Lecke: Weather & Seasons – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, #334155 0%, #64748B 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
+    .lesson-hero p { opacity: 0.9; font-size: 1.05rem; }
+
+    .lesson-body { max-width: 820px; margin: 0 auto; padding: 48px 24px 72px; }
+    .lesson-section { margin-bottom: 52px; }
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #F1F5F9;
+    }
+
+    /* Időjárás kártyák */
+    .weather-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+    .weather-card {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: var(--card-shadow);
+      padding: 20px 12px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .weather-card:hover { transform: translateY(-3px); }
+    .weather-icon { font-size: 2.4rem; margin-bottom: 10px; }
+    .weather-en { font-weight: 700; color: #334155; font-size: 0.93rem; }
+    .weather-hu { color: var(--text-light); font-size: 0.82rem; margin-top: 4px; }
+    .weather-note { font-size: 0.75rem; color: #94A3B8; margin-top: 4px; font-style: italic; }
+
+    /* Eső típusok – kiemelt */
+    .rain-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      margin-top: 20px;
+    }
+    .rain-box-header {
+      background: linear-gradient(135deg, #334155, #64748B);
+      color: var(--white);
+      padding: 14px 22px;
+      font-weight: 700;
+      font-size: 0.97rem;
+    }
+    .rain-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 22px;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    .rain-row:last-child { border-bottom: none; }
+    .rain-emoji { font-size: 1.6rem; min-width: 36px; text-align: center; }
+    .rain-en { font-weight: 700; color: #334155; font-size: 0.97rem; min-width: 120px; }
+    .rain-hu { color: var(--text-light); font-size: 0.9rem; }
+    .rain-example { font-size: 0.85rem; color: #475569; font-style: italic; margin-top: 3px; }
+
+    /* Small talk */
+    .smalltalk-list { display: flex; flex-direction: column; gap: 14px; }
+    .smalltalk-item {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 18px 22px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .smalltalk-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .smalltalk-en { font-weight: 600; color: #334155; font-size: 1rem; }
+    .smalltalk-hu { color: var(--text-light); font-size: 0.88rem; margin-top: 4px; }
+    .smalltalk-reply { font-size: 0.85rem; color: #475569; margin-top: 6px; font-style: italic; }
+
+    /* Évszakok */
+    .seasons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .season-card {
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+    .season-header { padding: 16px; color: var(--white); text-align: center; }
+    .season-header.spring { background: linear-gradient(135deg, #16A34A, #4ADE80); }
+    .season-header.summer { background: linear-gradient(135deg, #D97706, #FCD34D); color: #1C1917; }
+    .season-header.autumn { background: linear-gradient(135deg, #B45309, #F97316); }
+    .season-header.winter { background: linear-gradient(135deg, #1D4ED8, #93C5FD); }
+    .season-icon { font-size: 2rem; }
+    .season-name { font-weight: 700; font-size: 1.05rem; margin-top: 6px; }
+    .season-hu { font-size: 0.85rem; opacity: 0.85; }
+    .season-body { background: var(--white); padding: 16px; }
+    .season-months { font-size: 0.88rem; color: var(--text-light); margin-bottom: 8px; }
+    .season-temp { font-weight: 600; color: #334155; font-size: 0.93rem; }
+    .season-desc { font-size: 0.85rem; color: var(--text-light); margin-top: 6px; font-style: italic; }
+
+    /* Hőmérséklet */
+    .temp-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+    }
+    .temp-scale {
+      display: flex;
+      gap: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      height: 56px;
+    }
+    .temp-segment {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--white);
+      gap: 2px;
+    }
+    .t1 { background: #1D4ED8; }
+    .t2 { background: #0891B2; }
+    .t3 { background: #16A34A; }
+    .t4 { background: #D97706; }
+    .t5 { background: #DC2626; }
+    .temp-phrases { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media(max-width: 500px) { .temp-phrases { grid-template-columns: 1fr; } }
+    .temp-phrase { background: #F8FAFC; border-radius: 10px; padding: 12px 14px; font-size: 0.9rem; }
+    .temp-phrase .deg { font-weight: 700; color: #334155; }
+    .temp-phrase .desc { color: var(--text-light); font-size: 0.83rem; margin-top: 3px; }
+
+    /* Párbeszéd */
+    .dialogue { background: var(--white); border-radius: var(--radius); box-shadow: var(--card-shadow); padding: 28px; }
+    .dialogue-line { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+    .dialogue-line:last-child { margin-bottom: 0; }
+    .speaker {
+      min-width: 68px; font-weight: 700; font-size: 0.8rem;
+      color: var(--white); background: #334155;
+      border-radius: 8px; padding: 4px 10px; text-align: center; margin-top: 2px;
+    }
+    .speaker.b { background: #475569; }
+    .dialogue-text .en-text { font-weight: 500; }
+    .dialogue-text .hu-text { color: var(--text-light); font-size: 0.88rem; margin-top: 2px; }
+
+    /* Öltözős kvíz */
+    .outfit-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .outfit-weather {
+      background: #F1F5F9;
+      border-left: 4px solid #334155;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 20px;
+    }
+    .outfit-q { font-weight: 600; margin-bottom: 16px; }
+    .outfit-options { display: flex; flex-direction: column; gap: 10px; }
+    .outfit-option {
+      padding: 13px 18px;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.97rem;
+      background: var(--bg);
+      transition: 0.2s;
+      text-align: left;
+      font-family: inherit;
+    }
+    .outfit-option:hover { border-color: #334155; background: #F1F5F9; }
+    .outfit-option.correct { border-color: #10B981; background: #D1FAE5; color: #065F46; font-weight: 600; }
+    .outfit-option.wrong { border-color: #EF4444; background: #FEE2E2; color: #991B1B; }
+    .outfit-option:disabled { cursor: default; }
+    .outfit-feedback {
+      margin-top: 14px; padding: 13px 16px; border-radius: 8px;
+      font-weight: 600; display: none;
+    }
+    .outfit-feedback.show { display: block; }
+    .outfit-feedback.ok { background: #D1FAE5; color: #065F46; }
+    .outfit-feedback.ko { background: #FEE2E2; color: #991B1B; }
+
+    .lesson-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 48px; gap: 16px; flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+        <span style="background:#EEF2FF;color:var(--primary);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;">British English</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">A2 – Alapfok · 9. Lecke · ⏱ 20 perc</div>
+    <h1>Weather &amp; Seasons 🌧️</h1>
+    <p>Az angolok kedvenc témája – a brit időjárás és a small talk</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. IDŐJÁRÁS SZÓKINCS -->
+    <div class="lesson-section">
+      <h2>☁️ Időjárási szókincs (Weather Vocabulary)</h2>
+      <div class="weather-grid">
+        <div class="weather-card">
+          <div class="weather-icon">☀️</div>
+          <div class="weather-en">sunny</div>
+          <div class="weather-hu">napsütéses</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-icon">⛅</div>
+          <div class="weather-en">cloudy</div>
+          <div class="weather-hu">felhős</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-icon">🌧️</div>
+          <div class="weather-en">rainy</div>
+          <div class="weather-hu">esős</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-icon">💨</div>
+          <div class="weather-en">windy</div>
+          <div class="weather-hu">szeles</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-icon">🌫️</div>
+          <div class="weather-en">foggy</div>
+          <div class="weather-hu">ködös</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-icon">❄️</div>
+          <div class="weather-en">snowy</div>
+          <div class="weather-hu">havas</div>
+          <div class="weather-note">ritka Oldhamben!</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-icon">⛈️</div>
+          <div class="weather-en">stormy</div>
+          <div class="weather-hu">viharos</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-icon">🥶</div>
+          <div class="weather-en">freezing</div>
+          <div class="weather-hu">fagyos, dermesztő</div>
+        </div>
+        <div class="weather-card">
+          <div class="weather-icon">🌤️</div>
+          <div class="weather-en">bright spells</div>
+          <div class="weather-hu">napos időszakok</div>
+          <div class="weather-note">brit előrejelzés!</div>
+        </div>
+      </div>
+
+      <!-- Eső típusok -->
+      <div class="rain-box">
+        <div class="rain-box-header">🌧️ Az eső fajtái – Angliában ez fontos!</div>
+        <div class="rain-row">
+          <div class="rain-emoji">🌦️</div>
+          <div class="rain-en">drizzle</div>
+          <div>
+            <div class="rain-hu">szitáló, szemerkélő eső</div>
+            <div class="rain-example">"It's just drizzling – you don't need a big umbrella."</div>
+          </div>
+        </div>
+        <div class="rain-row">
+          <div class="rain-emoji">🌧️</div>
+          <div class="rain-en">shower</div>
+          <div>
+            <div class="rain-hu">rövid záporon</div>
+            <div class="rain-example">"There'll be scattered showers this afternoon."</div>
+          </div>
+        </div>
+        <div class="rain-row">
+          <div class="rain-emoji">⛈️</div>
+          <div class="rain-en">pouring (with rain)</div>
+          <div>
+            <div class="rain-hu">zuhogó, ömlő eső</div>
+            <div class="rain-example">"It's absolutely pouring out there – don't go without a coat!"</div>
+          </div>
+        </div>
+        <div class="rain-row">
+          <div class="rain-emoji">🌊</div>
+          <div class="rain-en">torrential rain</div>
+          <div>
+            <div class="rain-hu">felhőszakadás</div>
+            <div class="rain-example">"There was torrential rain last night – the roads flooded."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. BRIT SMALL TALK -->
+    <div class="lesson-section">
+      <h2>💬 Brit Small Talk – Időjárásról</h2>
+      <p style="color:var(--text-light); margin-bottom:20px; font-size:0.95rem;">Az angolok az időjárásról való panaszkodást szinte művészetté emelték. Ezeket a mondatokat mindenhol használhatod!</p>
+      <div class="smalltalk-list">
+        <div class="smalltalk-item">
+          <div class="smalltalk-icon">😊</div>
+          <div>
+            <div class="smalltalk-en">Lovely day, isn't it?</div>
+            <div class="smalltalk-hu">Szép nap, ugye?</div>
+            <div class="smalltalk-reply">→ "Yes, gorgeous! Let's hope it lasts."</div>
+          </div>
+        </div>
+        <div class="smalltalk-item">
+          <div class="smalltalk-icon">😒</div>
+          <div>
+            <div class="smalltalk-en">Horrible weather today, isn't it?</div>
+            <div class="smalltalk-hu">Szörnyű idő van ma, ugye?</div>
+            <div class="smalltalk-reply">→ "Awful! Typical for this time of year though."</div>
+          </div>
+        </div>
+        <div class="smalltalk-item">
+          <div class="smalltalk-icon">🤞</div>
+          <div>
+            <div class="smalltalk-en">I hope it stays fine for the weekend.</div>
+            <div class="smalltalk-hu">Remélem, szép marad a hétvégére.</div>
+            <div class="smalltalk-reply">→ "Me too – fingers crossed!"</div>
+          </div>
+        </div>
+        <div class="smalltalk-item">
+          <div class="smalltalk-icon">📈</div>
+          <div>
+            <div class="smalltalk-en">Better than yesterday, at least!</div>
+            <div class="smalltalk-hu">Legalább jobb, mint tegnap volt!</div>
+            <div class="smalltalk-reply">→ "True! Yesterday was dreadful."</div>
+          </div>
+        </div>
+        <div class="smalltalk-item">
+          <div class="smalltalk-icon">🥶</div>
+          <div>
+            <div class="smalltalk-en">Cold, isn't it? / Bit nippy out there!</div>
+            <div class="smalltalk-hu">Hideg van, ugye? / Csípős odakint!</div>
+            <div class="smalltalk-reply">→ "Freezing! I should've worn my coat." — "nippy" = brit szleng: csípős hideg</div>
+          </div>
+        </div>
+        <div class="smalltalk-item">
+          <div class="smalltalk-icon">🙄</div>
+          <div>
+            <div class="smalltalk-en">Typical British weather!</div>
+            <div class="smalltalk-hu">Tipikus brit időjárás!</div>
+            <div class="smalltalk-reply">→ "Ha! Four seasons in one day up north!" — az észak-angliai időjárásra klasszikus!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. ÉVSZAKOK -->
+    <div class="lesson-section">
+      <h2>🗓️ Évszakok és hónapok (Seasons & Months)</h2>
+      <div class="seasons-grid">
+        <div class="season-card">
+          <div class="season-header spring">
+            <div class="season-icon">🌸</div>
+            <div class="season-name">Spring</div>
+            <div class="season-hu">Tavasz</div>
+          </div>
+          <div class="season-body">
+            <div class="season-months">March · April · May</div>
+            <div class="season-temp">8–15 °C</div>
+            <div class="season-desc">"The days are getting longer."</div>
+          </div>
+        </div>
+        <div class="season-card">
+          <div class="season-header summer">
+            <div class="season-icon">☀️</div>
+            <div class="season-name">Summer</div>
+            <div class="season-hu">Nyár</div>
+          </div>
+          <div class="season-body">
+            <div class="season-months">June · July · August</div>
+            <div class="season-temp">15–25 °C</div>
+            <div class="season-desc">"A heatwave" – ritka, de van!</div>
+          </div>
+        </div>
+        <div class="season-card">
+          <div class="season-header autumn">
+            <div class="season-icon">🍂</div>
+            <div class="season-name">Autumn</div>
+            <div class="season-hu">Ősz</div>
+          </div>
+          <div class="season-body">
+            <div class="season-months">September · October · November</div>
+            <div class="season-temp">5–14 °C</div>
+            <div class="season-desc">"Leaves are falling." ← brit szó, USA: "fall"</div>
+          </div>
+        </div>
+        <div class="season-card">
+          <div class="season-header winter">
+            <div class="season-icon">❄️</div>
+            <div class="season-name">Winter</div>
+            <div class="season-hu">Tél</div>
+          </div>
+          <div class="season-body">
+            <div class="season-months">December · January · February</div>
+            <div class="season-temp">0–7 °C</div>
+            <div class="season-desc">"It's grey and damp." – tipikus!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. HŐMÉRSÉKLET -->
+    <div class="lesson-section">
+      <h2>🌡️ Hőmérséklet (Temperature)</h2>
+      <div class="temp-box">
+        <div class="temp-scale">
+          <div class="temp-segment t1"><span>❄️</span><span>0°C</span></div>
+          <div class="temp-segment t2"><span>🥶</span><span>5°C</span></div>
+          <div class="temp-segment t3"><span>😊</span><span>15°C</span></div>
+          <div class="temp-segment t4"><span>😅</span><span>22°C</span></div>
+          <div class="temp-segment t5"><span>🔥</span><span>30°C+</span></div>
+        </div>
+        <div class="temp-phrases">
+          <div class="temp-phrase">
+            <div class="deg">Below zero / Minus degrees</div>
+            <div class="desc">Nulla fok alatt – "It's minus three tonight."</div>
+          </div>
+          <div class="temp-phrase">
+            <div class="deg">It's quite mild</div>
+            <div class="desc">Enyhe idő – 10-14°C Angliában ez "enyhe"!</div>
+          </div>
+          <div class="temp-phrase">
+            <div class="deg">In the mid-twenties</div>
+            <div class="desc">Kb. 23-26°C – "It's in the mid-twenties today."</div>
+          </div>
+          <div class="temp-phrase">
+            <div class="deg">A heatwave</div>
+            <div class="desc">Hőhullám – Angliában 28°C felett már ez!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. PÁRBESZÉD -->
+    <div class="lesson-section">
+      <h2>💬 Utcai small talk Oldhamben (Dialogue)</h2>
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <div class="speaker">Tom</div>
+          <div class="dialogue-text">
+            <div class="en-text">Morning, Margaret! Horrible weather again, isn't it?</div>
+            <div class="hu-text">Jó reggelt, Margaret! Megint szörnyű az idő, ugye?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Margaret</div>
+          <div class="dialogue-text">
+            <div class="en-text">Oh, tell me about it! It was absolutely pouring last night. I couldn't sleep with the noise!</div>
+            <div class="hu-text">Ó, ne is mondd! Tegnap éjjel zuhogott az eső. Nem tudtam aludni a zajtól!</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Tom</div>
+          <div class="dialogue-text">
+            <div class="en-text">I know! And it's only October. Typical up north, isn't it?</div>
+            <div class="hu-text">Tudom! És ez csak október. Tipikus az északi részen, ugye?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Margaret</div>
+          <div class="dialogue-text">
+            <div class="en-text">Ha! Four seasons in one day here in Oldham. At least it's a bit brighter this morning.</div>
+            <div class="hu-text">Há! Négy évszak egy nap alatt itt Oldhamben. Legalább kicsit derültebb ez a reggel.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Tom</div>
+          <div class="dialogue-text">
+            <div class="en-text">True! I hope it stays fine – I'm going for a walk in the park later.</div>
+            <div class="hu-text">Igaz! Remélem, szép marad – később kimegyek sétálni a parkba.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Margaret</div>
+          <div class="dialogue-text">
+            <div class="en-text">I'd take a brolly just in case! You know what it's like round here.</div>
+            <div class="hu-text">Azért vinnék egy esernyőt csak a biztonság kedvéért! Tudod, milyen itt az idő.</div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:12px; font-size:0.85rem; color:var(--text-light);">💡 <strong>"brolly"</strong> = brit szleng az esernyőre (umbrella). Nagyon hétköznapi szó!</p>
+    </div>
+
+    <!-- 6. ÖLTÖZŐS KVÍZ -->
+    <div class="lesson-section">
+      <h2>🎯 Öltözős kvíz (Dressing for the Weather)</h2>
+      <p style="color:var(--text-light); margin-bottom:24px; font-size:0.95rem;">Milyen ruhát veszel fel az adott időjárásban?</p>
+
+      <div class="outfit-card" id="o1">
+        <div class="outfit-weather">🌧️💨 It's windy and cold – about 5°C and drizzling.</div>
+        <div class="outfit-q">Mit veszel fel?</div>
+        <div class="outfit-options">
+          <button class="outfit-option" onclick="outfit(this,'o1',false)">☀️ A T-shirt and sunglasses</button>
+          <button class="outfit-option" onclick="outfit(this,'o1',true)">🧥 A warm coat, scarf and waterproof jacket</button>
+          <button class="outfit-option" onclick="outfit(this,'o1',false)">👙 Light summer clothes</button>
+        </div>
+        <div class="outfit-feedback" id="o1-fb"></div>
+      </div>
+
+      <div class="outfit-card" id="o2">
+        <div class="outfit-weather">☀️🔥 It's hot and sunny – about 26°C, a lovely summer's day.</div>
+        <div class="outfit-q">Mit veszel fel?</div>
+        <div class="outfit-options">
+          <button class="outfit-option" onclick="outfit(this,'o2',false)">🧥 A heavy winter coat and boots</button>
+          <button class="outfit-option" onclick="outfit(this,'o2',false)">🌂 A raincoat and wellies</button>
+          <button class="outfit-option" onclick="outfit(this,'o2',true)">👕 Light clothes, sunscreen and sunglasses</button>
+        </div>
+        <div class="outfit-feedback" id="o2-fb"></div>
+      </div>
+
+      <div class="outfit-card" id="o3">
+        <div class="outfit-weather">🌫️❄️ It's foggy and freezing – below zero, icy pavements.</div>
+        <div class="outfit-q">Mit veszel fel és mire figyelsz?</div>
+        <div class="outfit-options">
+          <button class="outfit-option" onclick="outfit(this,'o3',false)">🩴 Flip-flops and shorts – it'll warm up</button>
+          <button class="outfit-option" onclick="outfit(this,'o3',true)">🧤 Gloves, a hat, thick coat and sturdy boots</button>
+          <button class="outfit-option" onclick="outfit(this,'o3',false)">👒 A sun hat and light cardigan</button>
+        </div>
+        <div class="outfit-feedback" id="o3-fb"></div>
+      </div>
+
+      <div class="outfit-card" id="o4">
+        <div class="outfit-weather">🌂 What do the British call an umbrella in everyday speech?</div>
+        <div class="outfit-q">Melyik a helyes brit szleng szó?</div>
+        <div class="outfit-options">
+          <button class="outfit-option" onclick="outfit(this,'o4',false)">rainhat</button>
+          <button class="outfit-option" onclick="outfit(this,'o4',true)">brolly</button>
+          <button class="outfit-option" onclick="outfit(this,'o4',false)">wetshield</button>
+        </div>
+        <div class="outfit-feedback" id="o4-fb"></div>
+      </div>
+
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lesson8.html" class="btn btn-primary" style="background:var(--text-light);">← 8. Lecke</a>
+      <span style="color:var(--text-light); font-size:0.9rem;">9 / 10 lecke</span>
+      <a href="lesson10.html" class="btn btn-primary" style="opacity:0.4; pointer-events:none;">10. Lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function outfit(btn, id, isCorrect) {
+      const card = document.getElementById(id);
+      const fb = document.getElementById(id + '-fb');
+      card.querySelectorAll('.outfit-option').forEach(b => b.disabled = true);
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.classList.add('show', isCorrect ? 'ok' : 'ko');
+      if (isCorrect) {
+        fb.textContent = '✅ Helyes! Jól öltöztél fel!';
+      } else {
+        const correct = [...card.querySelectorAll('.outfit-option')].find(b => b.onclick.toString().includes('true'));
+        fb.textContent = '❌ Nem egészen. A legjobb választás: "' + correct.textContent + '"';
+        correct.classList.add('correct');
+      }
+    }
+  </script>
+</body>
+</html>
