@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10. Lecke: Review & Next Steps – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, #92400E 0%, #D97706 50%, #FBBF24 100%);
+      color: var(--white);
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 12px; }
+    .lesson-hero p { opacity: 0.95; font-size: 1.1rem; max-width: 520px; margin: 0 auto; }
+
+    .lesson-body { max-width: 820px; margin: 0 auto; padding: 48px 24px 72px; }
+    .lesson-section { margin-bottom: 52px; }
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #B45309;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #FEF3C7;
+    }
+
+    /* Összefoglaló lista */
+    .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .review-item {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 16px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .review-num {
+      min-width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #B45309, #D97706);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.88rem;
+      flex-shrink: 0;
+    }
+    .review-title { font-weight: 700; color: var(--text); font-size: 0.93rem; }
+    .review-key { color: var(--text-light); font-size: 0.83rem; margin-top: 3px; }
+
+    /* Kvíz */
+    .quiz-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+    .quiz-number {
+      display: inline-block;
+      background: linear-gradient(135deg, #B45309, #D97706);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 3px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .quiz-question { font-weight: 600; margin-bottom: 18px; font-size: 1rem; line-height: 1.5; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-option {
+      padding: 13px 18px;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.97rem;
+      background: var(--bg);
+      transition: 0.2s;
+      text-align: left;
+      font-family: inherit;
+    }
+    .quiz-option:hover { border-color: #D97706; background: #FFFBEB; }
+    .quiz-option.correct { border-color: #10B981; background: #D1FAE5; color: #065F46; font-weight: 600; }
+    .quiz-option.wrong { border-color: #EF4444; background: #FEE2E2; color: #991B1B; }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-feedback {
+      margin-top: 14px; padding: 13px 16px; border-radius: 8px;
+      font-weight: 600; display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.ok { background: #D1FAE5; color: #065F46; }
+    .quiz-feedback.ko { background: #FEE2E2; color: #991B1B; }
+
+    /* Eredmény */
+    .score-box {
+      background: linear-gradient(135deg, #92400E, #D97706);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      display: none;
+      margin-top: 24px;
+    }
+    .score-box.show { display: block; }
+    .score-number { font-size: 4rem; font-weight: 800; line-height: 1; }
+    .score-label { font-size: 1.1rem; opacity: 0.9; margin-top: 8px; }
+    .score-msg { font-size: 1rem; margin-top: 16px; opacity: 0.95; }
+
+    /* Oklevél */
+    .certificate {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 48px rgba(180,83,9,0.18);
+      border: 3px solid #FBBF24;
+      padding: 48px 36px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .certificate::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #B45309, #FBBF24, #B45309);
+    }
+    .cert-confetti { font-size: 2rem; letter-spacing: 8px; margin-bottom: 16px; }
+    .cert-title { font-size: 0.85rem; font-weight: 700; color: #B45309; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+    .cert-heading { font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .cert-sub { color: var(--text-light); font-size: 0.97rem; margin-bottom: 28px; }
+    .cert-name {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: #B45309;
+      border-bottom: 3px solid #FBBF24;
+      display: inline-block;
+      padding-bottom: 6px;
+      margin-bottom: 24px;
+    }
+    .cert-body { color: var(--text-light); font-size: 0.95rem; line-height: 1.8; max-width: 480px; margin: 0 auto 28px; }
+    .cert-lessons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .cert-lesson-chip {
+      background: #FEF3C7;
+      color: #92400E;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .cert-date { color: #B45309; font-weight: 600; font-size: 0.93rem; }
+
+    /* Következő lépések */
+    .next-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+    .next-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .next-card:hover { transform: translateY(-3px); }
+    .next-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .next-title { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 8px; }
+    .next-desc { color: var(--text-light); font-size: 0.88rem; line-height: 1.6; margin-bottom: 14px; }
+    .next-link {
+      display: inline-block;
+      padding: 8px 20px;
+      background: #FEF3C7;
+      color: #92400E;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: 0.2s;
+    }
+    .next-link:hover { background: #D97706; color: var(--white); }
+
+    /* Személyes üzenet */
+    .personal-box {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: var(--radius);
+      padding: 36px;
+      color: var(--white);
+      text-align: center;
+    }
+    .personal-box h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 16px; }
+    .personal-box p { font-size: 0.97rem; line-height: 1.8; opacity: 0.95; max-width: 560px; margin: 0 auto 16px; }
+    .personal-box p:last-child { margin-bottom: 0; }
+    .personal-sig { font-weight: 700; font-size: 1.1rem; margin-top: 20px; }
+
+    .lesson-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 48px; gap: 16px; flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+        <span style="background:#EEF2FF;color:var(--primary);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;">British English</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">🏆 Összefoglaló · 10. Lecke</div>
+    <h1>🎉 Review & Next Steps</h1>
+    <p>Nagy vegyes kvíz, gratulációs oklevél és útmutató a folytatáshoz</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. ÖSSZEFOGLALÓ -->
+    <div class="lesson-section">
+      <h2>📋 Az első 9 lecke – mit tanultál?</h2>
+      <div class="review-grid">
+        <div class="review-item">
+          <div class="review-num">1</div>
+          <div><div class="review-title">Greetings & Introduction</div><div class="review-key">To Be, bemutatkozás, Nice to meet you</div></div>
+        </div>
+        <div class="review-item">
+          <div class="review-num">2</div>
+          <div><div class="review-title">Numbers & Shopping</div><div class="review-key">1–100, pound/pence, quid, Can I pay by card?</div></div>
+        </div>
+        <div class="review-item">
+          <div class="review-num">3</div>
+          <div><div class="review-title">My Day – Simple Present</div><div class="review-key">Napi rutin, -s végződés E/3-ban, időpontok</div></div>
+        </div>
+        <div class="review-item">
+          <div class="review-num">4</div>
+          <div><div class="review-title">At the Restaurant</div><div class="review-key">I'd like..., Can I have...?, bill, service charge</div></div>
+        </div>
+        <div class="review-item">
+          <div class="review-num">5</div>
+          <div><div class="review-title">Family & People</div><div class="review-key">Possessive 's, siblings, in-laws, melléknevek</div></div>
+        </div>
+        <div class="review-item">
+          <div class="review-num">6</div>
+          <div><div class="review-title">Travel & Directions</div><div class="review-key">Turn left/right, single/return, contactless</div></div>
+        </div>
+        <div class="review-item">
+          <div class="review-num">7</div>
+          <div><div class="review-title">Work & Career</div><div class="review-key">Szakmák, shift work, interjú kérdések</div></div>
+        </div>
+        <div class="review-item">
+          <div class="review-num">8</div>
+          <div><div class="review-title">Free Time & Hobbies</div><div class="review-key">Like/love/hate + -ing, Etihad, Alexandra Park</div></div>
+        </div>
+        <div class="review-item">
+          <div class="review-num">9</div>
+          <div><div class="review-title">Weather & Seasons</div><div class="review-key">Drizzle, pouring, brolly, brit small talk</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. NAGY KVÍZ -->
+    <div class="lesson-section">
+      <h2>🎯 A Nagy Kvíz (The Big Quiz) – 10 kérdés</h2>
+      <p style="color:var(--text-light); margin-bottom:28px; font-size:0.95rem;">Mindenből! Nézzük meg, mennyi maradt meg az első 9 leckéből.</p>
+
+      <div class="quiz-card" id="q1">
+        <div class="quiz-number">1 / 10 · Leckék 1–2</div>
+        <div class="quiz-question">Hogyan mondod udvariasan angolul: "Szeretnék egy kávét, kérem."?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q1',false)">I want a coffee.</button>
+          <button class="quiz-option" onclick="answer(this,'q1',true)">I'd like a coffee, please.</button>
+          <button class="quiz-option" onclick="answer(this,'q1',false)">Give me a coffee.</button>
+        </div>
+        <div class="quiz-feedback" id="q1-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q2">
+        <div class="quiz-number">2 / 10 · Lecke 2</div>
+        <div class="quiz-question">Mit jelent a brit "quid" szó?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q2',false)">Penny</button>
+          <button class="quiz-option" onclick="answer(this,'q2',true)">Pound (font)</button>
+          <button class="quiz-option" onclick="answer(this,'q2',false)">Számlát kérni</button>
+        </div>
+        <div class="quiz-feedback" id="q2-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q3">
+        <div class="quiz-number">3 / 10 · Lecke 3</div>
+        <div class="quiz-question">Melyik a HELYES mondat? (Simple Present, E/3)</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q3',false)">She go to work at 8 am.</button>
+          <button class="quiz-option" onclick="answer(this,'q3',false)">She going to work at 8 am.</button>
+          <button class="quiz-option" onclick="answer(this,'q3',true)">She goes to work at 8 am.</button>
+        </div>
+        <div class="quiz-feedback" id="q3-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q4">
+        <div class="quiz-number">4 / 10 · Lecke 4</div>
+        <div class="quiz-question">Hogyan kéred el a számlát étteremben?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q4',false)">I want the money paper!</button>
+          <button class="quiz-option" onclick="answer(this,'q4',true)">Could I have the bill, please?</button>
+          <button class="quiz-option" onclick="answer(this,'q4',false)">Give me bill now.</button>
+        </div>
+        <div class="quiz-feedback" id="q4-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q5">
+        <div class="quiz-number">5 / 10 · Lecke 5</div>
+        <div class="quiz-question">Melyik a HELYES mondat? (Possessive 's)</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q5',false)">The car of Tom is blue.</button>
+          <button class="quiz-option" onclick="answer(this,'q5',true)">Tom's car is blue.</button>
+          <button class="quiz-option" onclick="answer(this,'q5',false)">Toms car is blue.</button>
+        </div>
+        <div class="quiz-feedback" id="q5-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q6">
+        <div class="quiz-number">6 / 10 · Lecke 6</div>
+        <div class="quiz-question">Mi a különbség a "single" és "return" jegy között?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q6',false)">Mindkettő oda-vissza érvényes, csak az ár más.</button>
+          <button class="quiz-option" onclick="answer(this,'q6',true)">Single = csak oda; Return = oda és vissza.</button>
+          <button class="quiz-option" onclick="answer(this,'q6',false)">Single = gyors vonat; Return = lassabb.</button>
+        </div>
+        <div class="quiz-feedback" id="q6-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q7">
+        <div class="quiz-number">7 / 10 · Lecke 7</div>
+        <div class="quiz-question">"I pick and pack orders in a large building." – Mi a foglalkozása?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q7',false)">Nurse</button>
+          <button class="quiz-option" onclick="answer(this,'q7',false)">Lorry driver</button>
+          <button class="quiz-option" onclick="answer(this,'q7',true)">Warehouse operative</button>
+        </div>
+        <div class="quiz-feedback" id="q7-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q8">
+        <div class="quiz-number">8 / 10 · Lecke 8</div>
+        <div class="quiz-question">Melyik a HELYES mondat? (like + -ing)</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q8',false)">I love watch football.</button>
+          <button class="quiz-option" onclick="answer(this,'q8',true)">I love watching football.</button>
+          <button class="quiz-option" onclick="answer(this,'q8',false)">I love to watching football.</button>
+        </div>
+        <div class="quiz-feedback" id="q8-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q9">
+        <div class="quiz-number">9 / 10 · Lecke 9</div>
+        <div class="quiz-question">Mit jelent a brit "brolly" szó?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q9',false)">Cipő</button>
+          <button class="quiz-option" onclick="answer(this,'q9',false)">Kabát</button>
+          <button class="quiz-option" onclick="answer(this,'q9',true)">Esernyő (umbrella)</button>
+        </div>
+        <div class="quiz-feedback" id="q9-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q10">
+        <div class="quiz-number">10 / 10 · Brit kultúra</div>
+        <div class="quiz-question">Hogyan reagál egy brit, ha szép az idő?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q10',false)">Nem szól semmit – angolok nem beszélnek idegenekkel.</button>
+          <button class="quiz-option" onclick="answer(this,'q10',true)">"Lovely day, isn't it?" – és vár egy rövid választ.</button>
+          <button class="quiz-option" onclick="answer(this,'q10',false)">Azonnal meghív vacsorára.</button>
+        </div>
+        <div class="quiz-feedback" id="q10-fb"></div>
+      </div>
+
+      <div class="score-box" id="scoreBox">
+        <div class="score-number" id="scoreNum">0/10</div>
+        <div class="score-label">helyes válasz</div>
+        <div class="score-msg" id="scoreMsg"></div>
+      </div>
+    </div>
+
+    <!-- 3. OKLEVÉL -->
+    <div class="lesson-section">
+      <h2>🏆 Gratulációs Oklevél</h2>
+      <div class="certificate">
+        <div class="cert-confetti">🎉 🇬🇧 🎊</div>
+        <div class="cert-title">Certificate of Completion</div>
+        <div class="cert-heading">AngolTanfolyam – 1. Szint</div>
+        <div class="cert-sub">Ez az oklevél igazolja, hogy</div>
+        <div class="cert-name">A Tanulóm</div>
+        <div class="cert-body">
+          sikeresen elvégezte az <strong>AngolTanfolyam első 10 leckéjét</strong>, amely magában foglalja az alapvető angol kommunikáció, brit kultúra, mindennapi helyzetek és A1–A2 szintű nyelvtan elsajátítását.
+        </div>
+        <div class="cert-lessons">
+          <span class="cert-lesson-chip">✅ Greetings</span>
+          <span class="cert-lesson-chip">✅ Shopping</span>
+          <span class="cert-lesson-chip">✅ Daily Routine</span>
+          <span class="cert-lesson-chip">✅ Restaurant</span>
+          <span class="cert-lesson-chip">✅ Family</span>
+          <span class="cert-lesson-chip">✅ Travel</span>
+          <span class="cert-lesson-chip">✅ Work</span>
+          <span class="cert-lesson-chip">✅ Hobbies</span>
+          <span class="cert-lesson-chip">✅ Weather</span>
+          <span class="cert-lesson-chip">✅ Review</span>
+        </div>
+        <div class="cert-date">🗓️ 2026 · Oldham, England · British English</div>
+      </div>
+    </div>
+
+    <!-- 4. KÖVETKEZŐ LÉPÉSEK -->
+    <div class="lesson-section">
+      <h2>🚀 Hogyan tovább? (Next Steps)</h2>
+      <div class="next-grid">
+        <div class="next-card">
+          <div class="next-icon">📻</div>
+          <div class="next-title">BBC Learning English</div>
+          <div class="next-desc">Ingyenes, profi tartalom a BBC-től – videók, podcastok, cikkek minden szinten.</div>
+          <a href="https://www.bbc.co.uk/learningenglish" target="_blank" class="next-link">Megnyitás →</a>
+        </div>
+        <div class="next-card">
+          <div class="next-icon">🦜</div>
+          <div class="next-title">Duolingo</div>
+          <div class="next-desc">Napi 10 perces játékos gyakorlás – ideális kiegészítő ehhez a tanfolyamhoz.</div>
+          <a href="https://www.duolingo.com" target="_blank" class="next-link">Megnyitás →</a>
+        </div>
+        <div class="next-card">
+          <div class="next-icon">🎬</div>
+          <div class="next-title">British TV & Film</div>
+          <div class="next-desc">Nézz brit sorozatokat felirattal – Coronation Street, Gavin & Stacey, Only Fools and Horses.</div>
+          <a href="https://www.bbc.co.uk/iplayer" target="_blank" class="next-link">BBC iPlayer →</a>
+        </div>
+        <div class="next-card">
+          <div class="next-icon">✉️</div>
+          <div class="next-title">Személyes segítség</div>
+          <div class="next-desc">Kérdésed van? Írj nekem – szívesen segítek a nehezebb témákban is!</div>
+          <a href="contact.html" class="next-link">Kapcsolat →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. SZEMÉLYES ÜZENET -->
+    <div class="lesson-section">
+      <div class="personal-box">
+        <h3>🇬🇧 Egy személyes szó tőlem</h3>
+        <p>
+          Gratulálok! Befejeztél egy egész tanfolyamot – ez nem kis teljesítmény. Sokan abbahagyják az első lecke után, de te végigcsináltad mind a tizet.
+        </p>
+        <p>
+          Én magam is pontosan ugyanott kezdtem, ahol te most tartasz – Magyarországon, majd kijöttem Oldhambe, és a valódi brit élet tanított meg angolul. Ezért van ebben a tanfolyamban benne az Etihad Stadium, az Alexandra Park, a 59-es busz és a "brolly".
+        </p>
+        <p>
+          Az angol egy eszköz – a jobb munkához, a jobb élethez, a magabiztossághoz. Ne hagyd abba. Minden nap egy mondatot. Minden héten egy új lecke.
+        </p>
+        <p>
+          <strong>You've got this. Sikerül neked!</strong>
+        </p>
+        <div class="personal-sig">— Kolompar Gusztáv · Oldham, England 🇬🇧</div>
+      </div>
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lesson9.html" class="btn btn-primary" style="background:var(--text-light);">← 9. Lecke</a>
+      <a href="lessons.html" class="btn btn-primary" style="background:linear-gradient(135deg,#B45309,#D97706);">Összes lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    let score = 0;
+    let answered = 0;
+    const total = 10;
+
+    function answer(btn, qId, isCorrect) {
+      const card = document.getElementById(qId);
+      const feedback = document.getElementById(qId + '-fb');
+      card.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      feedback.classList.add('show', isCorrect ? 'ok' : 'ko');
+      if (isCorrect) {
+        score++;
+        feedback.textContent = '✅ Helyes!';
+      } else {
+        const correct = [...card.querySelectorAll('.quiz-option')].find(b => b.onclick.toString().includes('true'));
+        feedback.textContent = '❌ Nem egészen. Helyes: "' + correct.textContent + '"';
+        correct.classList.add('correct');
+      }
+      answered++;
+      if (answered === total) showScore();
+    }
+
+    function showScore() {
+      const box = document.getElementById('scoreBox');
+      const num = document.getElementById('scoreNum');
+      const msg = document.getElementById('scoreMsg');
+      num.textContent = score + '/' + total;
+      if (score === 10) msg.textContent = '🏆 Tökéletes eredmény! Kivételes teljesítmény!';
+      else if (score >= 8) msg.textContent = '🎉 Remek! Nagyon jól ment – büszke lehetsz magadra!';
+      else if (score >= 6) msg.textContent = '👍 Jól van! Érdemes visszanézni a nehezebb leckéket.';
+      else msg.textContent = '💪 Ne add fel! Menj vissza az első leckékhez és próbáld újra.';
+      box.classList.add('show');
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
+</body>
+</html>
