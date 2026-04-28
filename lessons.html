@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leckék – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" style="padding: 56px 24px;">
+    <h1 style="font-size: clamp(1.6rem, 4vw, 2.4rem);">Leckék</h1>
+    <p>Válaszd ki a szinted és kezdj bele!</p>
+  </section>
+
+  <!-- SZŰRŐ -->
+  <div class="section" style="padding-bottom: 0;">
+    <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom: 40px;">
+      <button class="filter-btn active" data-filter="all">Összes</button>
+      <button class="filter-btn" data-filter="a1">A1 – Kezdő</button>
+      <button class="filter-btn" data-filter="a2">A2 – Alapfok</button>
+      <button class="filter-btn" data-filter="b1">B1 – Középfok</button>
+      <button class="filter-btn" data-filter="b2">B2 – Felső közép</button>
+    </div>
+
+    <div class="cards" id="lessonGrid">
+
+      <!-- A1 leckék -->
+      <div class="lesson-card" data-level="a1">
+        <div class="lesson-card-top">
+          <div class="lesson-badge">A1 – Kezdő</div>
+          <h3>To Be – A létige</h3>
+        </div>
+        <div class="lesson-card-body">
+          <p>Megtanulod az angol legfontosabb igéjét: I am, You are, He is... Magyar példamondatokkal.</p>
+          <div class="lesson-meta">
+            <span>⏱ 15 perc</span>
+            <span>📝 5 feladat</span>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Lecke megnyitása</a>
+        </div>
+      </div>
+
+      <div class="lesson-card" data-level="a1">
+        <div class="lesson-card-top">
+          <div class="lesson-badge">A1 – Kezdő</div>
+          <h3>Számok és betűk</h3>
+        </div>
+        <div class="lesson-card-body">
+          <p>1-től 100-ig a számok, az ábécé és az alapvető kérdések: How old are you?</p>
+          <div class="lesson-meta">
+            <span>⏱ 10 perc</span>
+            <span>📝 3 feladat</span>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Lecke megnyitása</a>
+        </div>
+      </div>
+
+      <div class="lesson-card" data-level="a1">
+        <div class="lesson-card-top">
+          <div class="lesson-badge">A1 – Kezdő</div>
+          <h3>Bemutatkozás</h3>
+        </div>
+        <div class="lesson-card-body">
+          <p>My name is... I'm from... I live in... – az első angol mondataid.</p>
+          <div class="lesson-meta">
+            <span>⏱ 12 perc</span>
+            <span>📝 4 feladat</span>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Lecke megnyitása</a>
+        </div>
+      </div>
+
+      <!-- A2 leckék -->
+      <div class="lesson-card" data-level="a2">
+        <div class="lesson-card-top" style="background: linear-gradient(135deg, #0891B2, #06B6D4);">
+          <div class="lesson-badge">A2 – Alapfok</div>
+          <h3>Simple Present</h3>
+        </div>
+        <div class="lesson-card-body">
+          <p>Hogyan mesélsz a szokásaidról? I work, She works – a jelen idő szabályai.</p>
+          <div class="lesson-meta">
+            <span>⏱ 20 perc</span>
+            <span>📝 6 feladat</span>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Lecke megnyitása</a>
+        </div>
+      </div>
+
+      <div class="lesson-card" data-level="a2">
+        <div class="lesson-card-top" style="background: linear-gradient(135deg, #0891B2, #06B6D4);">
+          <div class="lesson-badge">A2 – Alapfok</div>
+          <h3>Past Simple</h3>
+        </div>
+        <div class="lesson-card-body">
+          <p>Hogyan mesélsz múlt eseményekről? I worked, She went – szabályos és rendhagyó igék.</p>
+          <div class="lesson-meta">
+            <span>⏱ 25 perc</span>
+            <span>📝 7 feladat</span>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Lecke megnyitása</a>
+        </div>
+      </div>
+
+      <!-- B1 leckék -->
+      <div class="lesson-card" data-level="b1">
+        <div class="lesson-card-top" style="background: linear-gradient(135deg, #059669, #10B981);">
+          <div class="lesson-badge">B1 – Középfok</div>
+          <h3>Present Perfect</h3>
+        </div>
+        <div class="lesson-card-body">
+          <p>I have been, She has done – a magyarban nem létező igeidő, amit mégis meg kell érteni.</p>
+          <div class="lesson-meta">
+            <span>⏱ 30 perc</span>
+            <span>📝 8 feladat</span>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Lecke megnyitása</a>
+        </div>
+      </div>
+
+      <!-- B2 leckék -->
+      <div class="lesson-card" data-level="b2">
+        <div class="lesson-card-top" style="background: linear-gradient(135deg, #B45309, #F59E0B);">
+          <div class="lesson-badge">B2 – Felső közép</div>
+          <h3>Passive Voice</h3>
+        </div>
+        <div class="lesson-card-body">
+          <p>The book was written by... – a szenvedő szerkezet és mikor érdemes használni.</p>
+          <div class="lesson-meta">
+            <span>⏱ 35 perc</span>
+            <span>📝 9 feladat</span>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Lecke megnyitása</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="height: 72px;"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    // Hamburger menü
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    // Szűrő
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.lesson-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.level === filter) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+
+  <style>
+    .filter-btn {
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: 2px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.93rem;
+      transition: 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+  </style>
+</body>
+</html>

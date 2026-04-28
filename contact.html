@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kapcsolat – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html">Leckék</a>
+        <a href="contact.html" class="active">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" style="padding: 56px 24px;">
+    <h1 style="font-size: clamp(1.6rem, 4vw, 2.4rem);">Kapcsolat</h1>
+    <p>Kérdésed van? Írj bátran!</p>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="section">
+    <div class="contact-grid">
+
+      <!-- INFO -->
+      <div class="contact-info">
+        <h2>Lépj kapcsolatba velem</h2>
+        <p>Ha kérdésed van a tanfolyammal kapcsolatban, szívesen segítek. Általában 24 órán belül válaszolok.</p>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div>
+            <strong>Email</strong><br>
+            <span style="color:var(--text-light)">gusztavkolompar@gmail.com</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <strong>Helyszín</strong><br>
+            <span style="color:var(--text-light)">Magyarország</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">⏰</div>
+          <div>
+            <strong>Válaszidő</strong><br>
+            <span style="color:var(--text-light)">24 órán belül</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Neved</label>
+          <input type="text" id="name" placeholder="Pl. Kovács Anna" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email cím</label>
+          <input type="email" id="email" placeholder="pelda@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="subject">Tárgy</label>
+          <select id="subject">
+            <option value="">Válassz témát...</option>
+            <option>Kérdés a leckékről</option>
+            <option>Technikai probléma</option>
+            <option>Együttműködés</option>
+            <option>Egyéb</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Üzeneted</label>
+          <textarea id="message" placeholder="Írd le kérdésedet vagy üzenetedet..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Üzenet küldése →</button>
+        <div class="form-success" id="formSuccess">
+          ✅ Köszönöm! Hamarosan válaszolok.
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const success = document.getElementById('formSuccess');
+      success.style.display = 'block';
+      this.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
+    });
+  </script>
+</body>
+</html>

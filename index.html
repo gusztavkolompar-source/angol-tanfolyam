@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AngolTanfolyam – Tanulj angolul hatékonyan</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="active">Főoldal</a>
+        <a href="lessons.html">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Tanulj angolul<br>a nulláról – lépésről lépésre</h1>
+    <p>Strukturált leckék, valódi példák és bevált módszerek, amelyek tényleg működnek.</p>
+    <a href="lessons.html" class="btn btn-white">Kezdd el ingyen →</a>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="section">
+    <h2 class="section-title">Miért válassz minket?</h2>
+    <p class="section-sub">Minden, amire szükséged van az alapoktól a haladó szintig</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <h3>Strukturált tananyag</h3>
+        <p>A1-tól B2-ig minden szint megvan – pontosan tudod, hol tartasz és mi a következő lépés.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>Gyakorlatorientált</h3>
+        <p>Minden lecke végén valódi feladatok, hogy ne csak elméletben, hanem a gyakorlatban is menjen.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h3>Mobilbarát</h3>
+        <p>Tanulj bárhol, bármikor – telefonon, tableten és számítógépen egyaránt tökéletesen működik.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <h3>Rendszeres frissítés</h3>
+        <p>Folyamatosan bővülő tartalomkönyvtár – minden héten új leckék és gyakorlatok.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stats-inner">
+      <div>
+        <div class="stat-number">4</div>
+        <div class="stat-label">Szint (A1 – B2)</div>
+      </div>
+      <div>
+        <div class="stat-number">30+</div>
+        <div class="stat-label">Lecke</div>
+      </div>
+      <div>
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Ingyenes</div>
+      </div>
+      <div>
+        <div class="stat-number">🇭🇺</div>
+        <div class="stat-label">Magyar magyarázatok</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section" style="text-align:center; padding-top: 56px; padding-bottom: 72px;">
+    <h2 class="section-title">Készen állsz?</h2>
+    <p class="section-sub">Kezdd el az első leckével – nem kell regisztráció!</p>
+    <a href="lessons.html" class="btn btn-primary">Leckék megtekintése →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · Készítette: <a href="contact.html">Kolompar Gusztáv</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  </script>
+</body>
+</html>
