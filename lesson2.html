@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. Lecke: Numbers & Shopping – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
+    .lesson-hero p { opacity: 0.9; font-size: 1.05rem; }
+
+    .lesson-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+
+    .lesson-section { margin-bottom: 52px; }
+
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #EEF2FF;
+    }
+
+    /* Táblázat */
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    .vocab-table th {
+      background: var(--primary);
+      color: var(--white);
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .vocab-table td {
+      padding: 12px 18px;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.97rem;
+    }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:hover td { background: #F8FAFF; }
+    .vocab-table .en { font-weight: 600; color: var(--primary); }
+    .vocab-table .num { font-weight: 700; color: var(--accent); font-size: 1.05rem; }
+
+    /* Két oszlopos számtáblázat */
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 560px) { .numbers-grid { grid-template-columns: 1fr; } }
+
+    /* Pénz box */
+    .money-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+    }
+    .money-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    .money-row:last-child { border-bottom: none; }
+    .money-symbol {
+      font-size: 1.8rem;
+      min-width: 48px;
+      text-align: center;
+    }
+    .money-name { font-weight: 700; font-size: 1rem; }
+    .money-desc { color: var(--text-light); font-size: 0.9rem; margin-top: 2px; }
+    .money-tip {
+      margin-top: 20px;
+      background: #EEF2FF;
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 0.93rem;
+      color: var(--primary);
+    }
+
+    /* Párbeszéd */
+    .dialogue {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+    }
+    .dialogue-line {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .dialogue-line:last-child { margin-bottom: 0; }
+    .speaker {
+      min-width: 72px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--white);
+      background: var(--primary);
+      border-radius: 8px;
+      padding: 4px 10px;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .speaker.b { background: var(--accent); }
+    .dialogue-text .en-text { font-weight: 500; }
+    .dialogue-text .hu-text { color: var(--text-light); font-size: 0.88rem; margin-top: 2px; }
+
+    /* Kvíz */
+    .quiz-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 32px;
+      margin-bottom: 20px;
+    }
+    .quiz-question { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-option {
+      padding: 13px 18px;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.97rem;
+      background: var(--bg);
+      transition: border-color 0.2s, background 0.2s;
+      text-align: left;
+      font-family: inherit;
+    }
+    .quiz-option:hover { border-color: var(--primary); background: #EEF2FF; }
+    .quiz-option.correct { border-color: #10B981; background: #D1FAE5; color: #065F46; font-weight: 600; }
+    .quiz-option.wrong { border-color: #EF4444; background: #FEE2E2; color: #991B1B; }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-feedback {
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.ok { background: #D1FAE5; color: #065F46; }
+    .quiz-feedback.ko { background: #FEE2E2; color: #991B1B; }
+
+    .lesson-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+        <span style="background:#EEF2FF;color:var(--primary);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;">British English</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">A1 – Kezdő · 2. Lecke · ⏱ 20 perc</div>
+    <h1>Numbers &amp; Shopping</h1>
+    <p>Számok, font, penny – és amit a boltban azonnal használhatsz</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. SZÁMOK -->
+    <div class="lesson-section">
+      <h2>🔢 Számok (Numbers)</h2>
+      <div class="numbers-grid">
+
+        <!-- 1-20 -->
+        <table class="vocab-table">
+          <thead><tr><th>Szám</th><th>Angolul</th><th>Magyarul</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td class="en">one</td><td>egy</td></tr>
+            <tr><td class="num">2</td><td class="en">two</td><td>kettő</td></tr>
+            <tr><td class="num">3</td><td class="en">three</td><td>három</td></tr>
+            <tr><td class="num">4</td><td class="en">four</td><td>négy</td></tr>
+            <tr><td class="num">5</td><td class="en">five</td><td>öt</td></tr>
+            <tr><td class="num">6</td><td class="en">six</td><td>hat</td></tr>
+            <tr><td class="num">7</td><td class="en">seven</td><td>hét</td></tr>
+            <tr><td class="num">8</td><td class="en">eight</td><td>nyolc</td></tr>
+            <tr><td class="num">9</td><td class="en">nine</td><td>kilenc</td></tr>
+            <tr><td class="num">10</td><td class="en">ten</td><td>tíz</td></tr>
+            <tr><td class="num">11</td><td class="en">eleven</td><td>tizenegy</td></tr>
+            <tr><td class="num">12</td><td class="en">twelve</td><td>tizenkettő</td></tr>
+            <tr><td class="num">13</td><td class="en">thirteen</td><td>tizenhárom</td></tr>
+            <tr><td class="num">14</td><td class="en">fourteen</td><td>tizennégy</td></tr>
+            <tr><td class="num">15</td><td class="en">fifteen</td><td>tizenöt</td></tr>
+            <tr><td class="num">16</td><td class="en">sixteen</td><td>tizenhat</td></tr>
+            <tr><td class="num">17</td><td class="en">seventeen</td><td>tizenhét</td></tr>
+            <tr><td class="num">18</td><td class="en">eighteen</td><td>tizennyolc</td></tr>
+            <tr><td class="num">19</td><td class="en">nineteen</td><td>tizenkilenc</td></tr>
+            <tr><td class="num">20</td><td class="en">twenty</td><td>húsz</td></tr>
+          </tbody>
+        </table>
+
+        <!-- Tizesek + összetett számok -->
+        <table class="vocab-table">
+          <thead><tr><th>Szám</th><th>Angolul</th><th>Magyarul</th></tr></thead>
+          <tbody>
+            <tr><td class="num">30</td><td class="en">thirty</td><td>harminc</td></tr>
+            <tr><td class="num">40</td><td class="en">forty</td><td>negyven</td></tr>
+            <tr><td class="num">50</td><td class="en">fifty</td><td>ötven</td></tr>
+            <tr><td class="num">60</td><td class="en">sixty</td><td>hatvan</td></tr>
+            <tr><td class="num">70</td><td class="en">seventy</td><td>hetven</td></tr>
+            <tr><td class="num">80</td><td class="en">eighty</td><td>nyolcvan</td></tr>
+            <tr><td class="num">90</td><td class="en">ninety</td><td>kilencven</td></tr>
+            <tr><td class="num">100</td><td class="en">one hundred</td><td>száz</td></tr>
+            <tr><td class="num">21</td><td class="en">twenty-one</td><td>huszonegy</td></tr>
+            <tr><td class="num">35</td><td class="en">thirty-five</td><td>harmincöt</td></tr>
+            <tr><td class="num">47</td><td class="en">forty-seven</td><td>negyvenhét</td></tr>
+            <tr><td class="num">99</td><td class="en">ninety-nine</td><td>kilencvenkilenc</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <!-- 2. PÉNZ -->
+    <div class="lesson-section">
+      <h2>💷 Brit pénz (British Money)</h2>
+      <div class="money-box">
+        <div class="money-row">
+          <div class="money-symbol">£</div>
+          <div>
+            <div class="money-name">Pound (font)</div>
+            <div class="money-desc">Jele: £ — Például: £5 = "five pounds"</div>
+          </div>
+        </div>
+        <div class="money-row">
+          <div class="money-symbol">p</div>
+          <div>
+            <div class="money-name">Pence (penny)</div>
+            <div class="money-desc">1 font = 100 pence — Például: 50p = "fifty pence"</div>
+          </div>
+        </div>
+        <div class="money-row">
+          <div class="money-symbol">£1.99</div>
+          <div>
+            <div class="money-name">Vegyes összeg</div>
+            <div class="money-desc">"one pound ninety-nine" — a "pence" szót nem ismétlik meg</div>
+          </div>
+        </div>
+        <div class="money-tip">
+          💡 <strong>Brit szleng:</strong> A "pound"-ot az angolok informálisan <strong>"quid"</strong>-nek hívják. Pl.: "That's five quid." — ezt a Tesco-ban is hallani fogod!
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. PÁRBESZÉD -->
+    <div class="lesson-section">
+      <h2>🛒 Vásárlási párbeszéd (Shopping Dialogue)</h2>
+      <div class="dialogue">
+        <div class="dialogue-line">
+          <div class="speaker">Vásárló</div>
+          <div class="dialogue-text">
+            <div class="en-text">Excuse me, how much is this?</div>
+            <div class="hu-text">Elnézést, mennyibe kerül ez?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Eladó</div>
+          <div class="dialogue-text">
+            <div class="en-text">It's three pounds fifty, please.</div>
+            <div class="hu-text">Három font ötven, kérem.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Vásárló</div>
+          <div class="dialogue-text">
+            <div class="en-text">Can I pay by card?</div>
+            <div class="hu-text">Fizethetek kártyával?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Eladó</div>
+          <div class="dialogue-text">
+            <div class="en-text">Yes, of course. Do you need a bag?</div>
+            <div class="hu-text">Igen, természetesen. Kell egy szatyor?</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Vásárló</div>
+          <div class="dialogue-text">
+            <div class="en-text">No, thank you. I've got one.</div>
+            <div class="hu-text">Nem, köszönöm. Van nálam.</div>
+          </div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker b">Eladó</div>
+          <div class="dialogue-text">
+            <div class="en-text">That's lovely. Have a good day!</div>
+            <div class="hu-text">Szuper. Szép napot!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. KVÍZ -->
+    <div class="lesson-section">
+      <h2>🎯 Mini Kvíz</h2>
+
+      <div class="quiz-card" id="q1">
+        <div class="quiz-question">1. Hogyan mondod angolul: "harmincöt"?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q1',false)">thirteen-five</button>
+          <button class="quiz-option" onclick="answer(this,'q1',false)">thirty fifty</button>
+          <button class="quiz-option" onclick="answer(this,'q1',true)">thirty-five</button>
+        </div>
+        <div class="quiz-feedback" id="q1-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q2">
+        <div class="quiz-question">2. Mit jelent a brit "quid" szleng szó?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q2',false)">Penny</button>
+          <button class="quiz-option" onclick="answer(this,'q2',true)">Pound (font)</button>
+          <button class="quiz-option" onclick="answer(this,'q2',false)">Szatyor</button>
+        </div>
+        <div class="quiz-feedback" id="q2-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q3">
+        <div class="quiz-question">3. Hogyan kérdezed meg angolul: "Fizethetek kártyával?"</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q3',false)">How much is this?</button>
+          <button class="quiz-option" onclick="answer(this,'q3',false)">Do you need a bag?</button>
+          <button class="quiz-option" onclick="answer(this,'q3',true)">Can I pay by card?</button>
+        </div>
+        <div class="quiz-feedback" id="q3-fb"></div>
+      </div>
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lesson1.html" class="btn btn-primary" style="background: var(--text-light);">← 1. Lecke</a>
+      <span style="color:var(--text-light); font-size:0.9rem;">2 / 10 lecke</span>
+      <a href="#" class="btn btn-primary" style="opacity:0.4; pointer-events:none;">3. Lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function answer(btn, qId, isCorrect) {
+      const card = document.getElementById(qId);
+      const feedback = document.getElementById(qId + '-fb');
+      card.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      feedback.classList.add('show', isCorrect ? 'ok' : 'ko');
+      if (isCorrect) {
+        feedback.textContent = '✅ Helyes! Szép munka!';
+      } else {
+        const correct = [...card.querySelectorAll('.quiz-option')].find(b => b.onclick.toString().includes('true'));
+        feedback.textContent = '❌ Nem egészen. A helyes válasz: "' + correct.textContent + '"';
+        correct.classList.add('correct');
+      }
+    }
+  </script>
+</body>
+</html>
