@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. Lecke: Family & People – AngolTanfolyam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lesson-hero {
+      background: linear-gradient(135deg, #0891B2 0%, #06B6D4 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .lesson-hero .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .lesson-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
+    .lesson-hero p { opacity: 0.9; font-size: 1.05rem; }
+
+    .lesson-body { max-width: 820px; margin: 0 auto; padding: 48px 24px 72px; }
+    .lesson-section { margin-bottom: 52px; }
+    .lesson-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0891B2;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #ECFEFF;
+    }
+
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    .vocab-table th {
+      background: #0891B2;
+      color: var(--white);
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .vocab-table td { padding: 12px 18px; border-bottom: 1px solid #F1F5F9; font-size: 0.97rem; }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tr:hover td { background: #F0FDFF; }
+    .vocab-table .en { font-weight: 600; color: #0891B2; }
+
+    /* Családfa */
+    .family-tree {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+    }
+    .ft-level { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+    .ft-connector { text-align: center; color: #CBD5E1; font-size: 1.4rem; margin-bottom: 8px; }
+    .ft-person {
+      background: #EEF2FF;
+      border: 2px solid #C7D2FE;
+      border-radius: 12px;
+      padding: 12px 20px;
+      text-align: center;
+      min-width: 110px;
+    }
+    .ft-person.highlight { background: #DBEAFE; border-color: #0891B2; }
+    .ft-person .ft-name { font-weight: 700; font-size: 0.97rem; color: var(--primary); }
+    .ft-person .ft-role { font-size: 0.8rem; color: var(--text-light); margin-top: 3px; }
+
+    /* Possessive doboz */
+    .grammar-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+    .grammar-box-header {
+      background: linear-gradient(135deg, #0891B2, #06B6D4);
+      color: var(--white);
+      padding: 18px 28px;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .grammar-box-body { padding: 28px; }
+    .grammar-rule {
+      background: #ECFEFF;
+      border-left: 4px solid #0891B2;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      font-size: 0.97rem;
+    }
+    .poss-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .poss-grid { grid-template-columns: 1fr; } }
+    .poss-example {
+      background: #F0FDFF;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 0.95rem;
+    }
+    .poss-example .label { font-size: 0.8rem; font-weight: 700; color: #0891B2; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .poss-example .en { font-weight: 600; font-size: 1.05rem; }
+    .poss-example .apos { color: #DC2626; font-weight: 800; }
+    .poss-example .hu { color: var(--text-light); font-size: 0.88rem; margin-top: 4px; }
+    .poss-warning {
+      background: #FFF7ED;
+      border: 2px solid #F97316;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-top: 16px;
+      font-size: 0.93rem;
+      color: #9A3412;
+    }
+
+    /* Melléknevek */
+    .adj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .adj-card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 20px;
+    }
+    .adj-card-title { font-size: 0.8rem; font-weight: 700; color: #0891B2; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+    .adj-item { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #F1F5F9; font-size: 0.93rem; }
+    .adj-item:last-child { border-bottom: none; }
+    .adj-item .en { font-weight: 600; color: var(--text); }
+    .adj-item .hu { color: var(--text-light); }
+
+    /* Példaszöveg */
+    .story-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 32px;
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+    .story-box p { margin-bottom: 12px; }
+    .story-box p:last-child { margin-bottom: 0; }
+    .hl { color: #0891B2; font-weight: 700; }
+    .hl-poss { color: #DC2626; font-weight: 800; }
+
+    /* Kvíz */
+    .quiz-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .quiz-question { font-weight: 600; margin-bottom: 18px; font-size: 1rem; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-option {
+      padding: 13px 18px;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.97rem;
+      background: var(--bg);
+      transition: 0.2s;
+      text-align: left;
+      font-family: inherit;
+    }
+    .quiz-option:hover { border-color: #0891B2; background: #ECFEFF; }
+    .quiz-option.correct { border-color: #10B981; background: #D1FAE5; color: #065F46; font-weight: 600; }
+    .quiz-option.wrong { border-color: #EF4444; background: #FEE2E2; color: #991B1B; }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-feedback {
+      margin-top: 14px; padding: 13px 16px; border-radius: 8px;
+      font-weight: 600; display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.ok { background: #D1FAE5; color: #065F46; }
+    .quiz-feedback.ko { background: #FEE2E2; color: #991B1B; }
+
+    .lesson-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 48px; gap: 16px; flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <a href="index.html" class="logo">🇬🇧 AngolTanfolyam</a>
+        <span style="background:#EEF2FF;color:var(--primary);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;">British English</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Főoldal</a>
+        <a href="lessons.html" class="active">Leckék</a>
+        <a href="contact.html">Kapcsolat</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="lesson-hero">
+    <div class="badge">A2 – Alapfok · 5. Lecke · ⏱ 25 perc</div>
+    <h1>Family &amp; People 👨‍👩‍👧‍👦</h1>
+    <p>Családtagok, birtoklás és emberek jellemzése</p>
+  </div>
+
+  <div class="lesson-body">
+
+    <!-- 1. SZÓKINCS -->
+    <div class="lesson-section">
+      <h2>👨‍👩‍👧 Családi szókincs (Family Vocabulary)</h2>
+      <table class="vocab-table">
+        <thead><tr><th>Angolul</th><th>Magyarul</th><th>Megjegyzés</th></tr></thead>
+        <tbody>
+          <tr><td class="en">parents</td><td>szülők</td><td>mother + father együtt</td></tr>
+          <tr><td class="en">mother / mum</td><td>anya / anyu</td><td>"Mum" a brit változat (USA: "mom")</td></tr>
+          <tr><td class="en">father / dad</td><td>apa / apu</td><td>Mindkét változat használatos</td></tr>
+          <tr><td class="en">sibling</td><td>testvér (fiú vagy lány)</td><td>Nem jelöl nemet – semleges szó</td></tr>
+          <tr><td class="en">brother</td><td>fivér / öcs / bátya</td><td>"Older/younger brother" – idősebb/fiatalabb</td></tr>
+          <tr><td class="en">sister</td><td>nővér / húg</td><td>"Older/younger sister"</td></tr>
+          <tr><td class="en">grandparents</td><td>nagyszülők</td><td>grandmother + grandfather</td></tr>
+          <tr><td class="en">grandmother / granny</td><td>nagymama / nagyi</td><td>"Granny" a becéző forma</td></tr>
+          <tr><td class="en">grandfather / grandad</td><td>nagyapa / nagyapó</td><td>"Grandad" brit becézés</td></tr>
+          <tr><td class="en">aunt</td><td>nagynéni</td><td>Az apa vagy anya nővére/testvére</td></tr>
+          <tr><td class="en">uncle</td><td>nagybácsi</td><td>Az apa vagy anya fivére/testvére</td></tr>
+          <tr><td class="en">cousin</td><td>unokatestvér</td><td>Nem jelöl nemet angolban!</td></tr>
+          <tr><td class="en">relatives</td><td>rokonok</td><td>Mindenki, aki a tágabb családhoz tartozik</td></tr>
+          <tr><td class="en">in-laws</td><td>após/anyós (házastárs családja)</td><td>"Mother-in-law" = anyós, "father-in-law" = após</td></tr>
+          <tr><td class="en">partner / spouse</td><td>társ / házastárs</td><td>"Spouse" formálisabb, semleges nemű</td></tr>
+          <tr><td class="en">only child</td><td>egyke</td><td>"I'm an only child." = Egyke vagyok.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. CSALÁDFA -->
+    <div class="lesson-section">
+      <h2>🌳 Tom családfája (Tom's Family Tree)</h2>
+      <div class="family-tree">
+        <div class="ft-level">
+          <div class="ft-person">
+            <div class="ft-name">George</div>
+            <div class="ft-role">grandfather</div>
+          </div>
+          <div class="ft-person">
+            <div class="ft-name">Margaret</div>
+            <div class="ft-role">grandmother</div>
+          </div>
+        </div>
+        <div class="ft-connector">↓</div>
+        <div class="ft-level">
+          <div class="ft-person">
+            <div class="ft-name">David</div>
+            <div class="ft-role">father</div>
+          </div>
+          <div class="ft-person">
+            <div class="ft-name">Susan</div>
+            <div class="ft-role">mother</div>
+          </div>
+          <div class="ft-person">
+            <div class="ft-name">Carol</div>
+            <div class="ft-role">aunt (Susan's sister)</div>
+          </div>
+        </div>
+        <div class="ft-connector">↓</div>
+        <div class="ft-level">
+          <div class="ft-person highlight">
+            <div class="ft-name">Tom ⭐</div>
+            <div class="ft-role">– (te vagy!)</div>
+          </div>
+          <div class="ft-person">
+            <div class="ft-name">Lucy</div>
+            <div class="ft-role">sister</div>
+          </div>
+          <div class="ft-person">
+            <div class="ft-name">James</div>
+            <div class="ft-role">cousin (Carol's son)</div>
+          </div>
+        </div>
+        <div class="ft-connector">↓</div>
+        <div class="ft-level">
+          <div class="ft-person">
+            <div class="ft-name">Emma</div>
+            <div class="ft-role">Tom's wife</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. POSSESSIVE 'S -->
+    <div class="lesson-section">
+      <h2>📖 Nyelvtan: Possessive 's (Birtoklás)</h2>
+      <div class="grammar-box">
+        <div class="grammar-box-header">Hogyan fejezzük ki, hogy valami valakié?</div>
+        <div class="grammar-box-body">
+          <div class="grammar-rule">
+            Angolban a <strong>tulajdonos neve után</strong> apostrophe + s (<strong>'s</strong>) kerül.<br>
+            Magyarul ez fordítva működik: "Tom autója" → angolul: "<strong>Tom's car</strong>"
+          </div>
+          <div class="poss-grid">
+            <div class="poss-example">
+              <div class="label">Egy személy</div>
+              <div class="en">Tom<span class="hl-poss">'s</span> brother is tall.</div>
+              <div class="hu">Tom fivére magas.</div>
+            </div>
+            <div class="poss-example">
+              <div class="label">Egy személy</div>
+              <div class="en">My wife<span class="hl-poss">'s</span> job is interesting.</div>
+              <div class="hu">A feleségem munkája érdekes.</div>
+            </div>
+            <div class="poss-example">
+              <div class="label">Egy személy</div>
+              <div class="en">Lucy<span class="hl-poss">'s</span> friend lives in London.</div>
+              <div class="hu">Lucy barátnője Londonban él.</div>
+            </div>
+            <div class="poss-example">
+              <div class="label">Több ember (többes szám)</div>
+              <div class="en">the children<span class="hl-poss">'</span> toys</div>
+              <div class="hu">a gyerekek játékai (csak aposztróf, nincs s!)</div>
+            </div>
+          </div>
+          <div class="poss-warning">
+            ⚠️ <strong>Figyelj!</strong> Ha a szó már <em>-s</em>-re végződik (többes szám), csak apostróf kell, nem 's.<br>
+            "the children<strong>'</strong> toys" – de: "Tom<strong>'s</strong> toys" (Tom = egyes szám)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. MELLÉKNEVEK -->
+    <div class="lesson-section">
+      <h2>✨ Emberek jellemzése (Describing People)</h2>
+      <div class="adj-grid">
+        <div class="adj-card">
+          <div class="adj-card-title">Külső (Appearance)</div>
+          <div class="adj-item"><span class="en">tall / short</span><span class="hu">magas / alacsony</span></div>
+          <div class="adj-item"><span class="en">slim / overweight</span><span class="hu">vékony / túlsúlyos</span></div>
+          <div class="adj-item"><span class="en">young / elderly</span><span class="hu">fiatal / idősebb</span></div>
+          <div class="adj-item"><span class="en">dark-haired</span><span class="hu">sötét hajú</span></div>
+          <div class="adj-item"><span class="en">fair-haired</span><span class="hu">világos/szőke hajú</span></div>
+          <div class="adj-item"><span class="en">smart (clothes)</span><span class="hu">elegáns, csinos</span></div>
+        </div>
+        <div class="adj-card">
+          <div class="adj-card-title">Személyiség (Personality)</div>
+          <div class="adj-item"><span class="en">friendly</span><span class="hu">barátságos</span></div>
+          <div class="adj-item"><span class="en">hardworking</span><span class="hu">szorgalmas</span></div>
+          <div class="adj-item"><span class="en">kind</span><span class="hu">kedves</span></div>
+          <div class="adj-item"><span class="en">funny</span><span class="hu">vicces</span></div>
+          <div class="adj-item"><span class="en">quiet / shy</span><span class="hu">csendes / félénk</span></div>
+          <div class="adj-item"><span class="en">reliable</span><span class="hu">megbízható</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. PÉLDASZÖVEG -->
+    <div class="lesson-section">
+      <h2>📄 My Family – Példaszöveg</h2>
+      <div class="story-box">
+        <p>
+          My name is <span class="hl">Tom</span> and I live in <span class="hl">Oldham</span>.
+          I have a small but close family.
+          <span class="hl">My father<span class="hl-poss">'s</span> name</span> is David and he is a retired teacher.
+          He is tall, fair-haired and very <span class="hl">kind</span>.
+          <span class="hl">My mother<span class="hl-poss">'s</span> name</span> is Susan and she works part-time in a local shop.
+          She is friendly and <span class="hl">hardworking</span>.
+        </p>
+        <p>
+          I have one <span class="hl">sibling</span> – my younger <span class="hl">sister</span> Lucy.
+          <span class="hl">Lucy<span class="hl-poss">'s</span> job</span> is very interesting: she is a nurse at the hospital in Manchester.
+          She is <span class="hl">reliable</span> and funny.
+        </p>
+        <p>
+          My <span class="hl">wife<span class="hl-poss">'s</span> name</span> is Emma. She is from Yorkshire.
+          We don't have children yet, but we have a dog. <span class="hl">The dog<span class="hl-poss">'s</span> name</span> is Biscuit.
+        </p>
+        <p>
+          My <span class="hl">relatives</span> are mostly in the north of England.
+          <span class="hl">My aunt Carol<span class="hl-poss">'s</span> son</span>, James, is my only cousin. We meet at family events.
+        </p>
+      </div>
+      <p style="margin-top:12px; font-size:0.88rem; color:var(--text-light);">
+        💡 A <strong style="color:#0891B2;">kék szavak</strong> a kulcskifejezések. A <strong style="color:#DC2626;">piros 's</strong> jelzi a birtok szerkezetet.
+      </p>
+    </div>
+
+    <!-- 6. FAMILY KVÍZ -->
+    <div class="lesson-section">
+      <h2>🎯 Family Quiz – Ki kicsoda?</h2>
+      <p style="color:var(--text-light); margin-bottom:24px; font-size:0.95rem;">Egészítsd ki a mondatot a megfelelő rokoni szóval!</p>
+
+      <div class="quiz-card" id="q1">
+        <div class="quiz-question">1. "My father's sister is my ___."</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q1',false)">cousin</button>
+          <button class="quiz-option" onclick="answer(this,'q1',true)">aunt</button>
+          <button class="quiz-option" onclick="answer(this,'q1',false)">grandmother</button>
+        </div>
+        <div class="quiz-feedback" id="q1-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q2">
+        <div class="quiz-question">2. "My aunt's son is my ___."</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q2',false)">nephew</button>
+          <button class="quiz-option" onclick="answer(this,'q2',false)">brother</button>
+          <button class="quiz-option" onclick="answer(this,'q2',true)">cousin</button>
+        </div>
+        <div class="quiz-feedback" id="q2-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q3">
+        <div class="quiz-question">3. Melyik a brit szó az "anyukára"?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q3',false)">mom</button>
+          <button class="quiz-option" onclick="answer(this,'q3',true)">mum</button>
+          <button class="quiz-option" onclick="answer(this,'q3',false)">mama</button>
+        </div>
+        <div class="quiz-feedback" id="q3-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q4">
+        <div class="quiz-question">4. Hogyan mondod angolul: "Egyke vagyok."?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q4',false)">I have no siblings.</button>
+          <button class="quiz-option" onclick="answer(this,'q4',true)">I'm an only child.</button>
+          <button class="quiz-option" onclick="answer(this,'q4',false)">I am alone child.</button>
+        </div>
+        <div class="quiz-feedback" id="q4-fb"></div>
+      </div>
+
+      <div class="quiz-card" id="q5">
+        <div class="quiz-question">5. Melyik a HELYES mondat? (Possessive 's)</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this,'q5',false)">The car of Tom is blue.</button>
+          <button class="quiz-option" onclick="answer(this,'q5',true)">Tom's car is blue.</button>
+          <button class="quiz-option" onclick="answer(this,'q5',false)">Toms car is blue.</button>
+        </div>
+        <div class="quiz-feedback" id="q5-fb"></div>
+      </div>
+
+    </div>
+
+    <!-- NAVIGÁCIÓ -->
+    <div class="lesson-nav">
+      <a href="lesson4.html" class="btn btn-primary" style="background:var(--text-light);">← 4. Lecke</a>
+      <span style="color:var(--text-light); font-size:0.9rem;">5 / 10 lecke</span>
+      <a href="#" class="btn btn-primary" style="opacity:0.4; pointer-events:none;">6. Lecke →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AngolTanfolyam · <a href="contact.html">Kapcsolat</a></p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function answer(btn, qId, isCorrect) {
+      const card = document.getElementById(qId);
+      const feedback = document.getElementById(qId + '-fb');
+      card.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+      feedback.classList.add('show', isCorrect ? 'ok' : 'ko');
+      if (isCorrect) {
+        feedback.textContent = '✅ Helyes! Szép munka!';
+      } else {
+        const correct = [...card.querySelectorAll('.quiz-option')].find(b => b.onclick.toString().includes('true'));
+        feedback.textContent = '❌ Nem egészen. A helyes válasz: "' + correct.textContent + '"';
+        correct.classList.add('correct');
+      }
+    }
+  </script>
+</body>
+</html>
